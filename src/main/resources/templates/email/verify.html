@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Shop Item - Start Bootstrap Template</title>
+
+    <!-- Bootstrap core CSS -->
+    <!-- Custom styles for this template -->
+    <th:block th:replace="fragments/shopHead :: shopHead"/>
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav th:replace="fragments/shopNavbar :: shopNavbar"/>
+
+<!-- Page Content -->
+<div class="container">
+
+    <!-- /.col-lg-3 -->
+    <div class="card card-login mx-auto mt-5">
+        <div align="center" class="card-header">이메일 확인</div>
+        <div align="center" class="card-body">
+            <a th:if="${verify}">이메일 인증이 완료되었습니다!</a>
+            <div th:if="${verify} != true">
+                <p>이메일 인증에 실패했습니다.</p>
+                <p>인증 메일을 재전송하여 다시 시도해주세요.</p>
+            </div>
+        </div>
+        <div align="center" class="card-footer">
+            <a th:if="${verify} != true" class="btn btn-success" th:href="@{/resendEmail}">재전송</a>
+            <a th:href="@{/}" class="btn btn-success">확인</a>
+        </div>
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <th:block th:replace="fragments/shopScript :: shopScript"/>
+</body>
+
+</html>
+

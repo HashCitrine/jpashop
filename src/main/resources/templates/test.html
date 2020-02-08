@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <form th:object="${orderSearch}" class="form-inline">
+        <div class="form-group mb-2">
+            <input type="text" th:field="*{memberName}" class="form- control" placeholder="회원명"/>
+        </div>
+        <div class="form-group mx-sm-1 mb-2">
+            <select th:field="*{orderStatus}" class="form-control">
+                <option value="">주문상태</option>
+                <option th:each="status : ${T(shop.jpa.domain.DeliveryStatus).values()}"
+                        th:value="${status}"
+                        th:text="${status}">option
+                </option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">검색</button>
+    </form>

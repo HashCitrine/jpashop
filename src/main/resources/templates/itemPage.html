@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Shop Item - Start Bootstrap Template</title>
+
+    <!-- Bootstrap core CSS -->
+    <!-- Custom styles for this template -->
+    <th:block th:replace="fragments/shopHead :: shopHead"/>
+
+    <script language="JavaScript">
+        function addCart() {
+            var confirm1 = confirm("장바구니에 해당 상품을 담으시겠습니까?");
+            if (confirm1 == true) {
+                document.orderItem.submit();
+
+            }
+        }
+
+    </script>
+
+    <style>
+        .customTable {
+            width: 100%;
+            border: #d7d7d7;
+            border-top-color: #ffffff;
+            border-left-color: #ffffff;
+            border-right-color: #ffffff;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav th:replace="fragments/shopNavbar :: shopNavbar"/>
+
+<!-- Page Content -->
+<div class="container">
+
+    <th:block th:replace="fragments/shopSidebar :: shopSidebar"/>
+    <!-- /.col-lg-3 -->
+
+    <div class="col-lg-9">
+
+        <form th:action="@{/add/{itemId}/(itemId=${itemForm.id})}" name="orderItem" method="post">
+            <div th:object="${itemForm}" class="card mt-4">
+                <img class="card-img-top img-fluid" th:src="@{${itemForm.itemImageAddress}}" alt="">
+                <div class="card-body">
+                    <h3 class="card-title" th:text="*{name}">Product Name</h3>
+                    <h4 th:text="*{price} + '원'">$24.99</h4>
+                    <p class="card-text" th:text="*{memo}">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Sapiente dicta fugit fugiat hic aliquam itaque facere, soluta. Totam id dolores, sint aperiam
+                        sequi
+                        pariatur praesentium animi perspiciatis molestias iure, ducimus!</p>
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <span><a th:text="'남은수량 : ' + *{stockQuantity} + '개'"></a></span>
+                        </div>
+                        <div align="right" class="col-lg-2">
+                            <div align="right" th:if="*{stockQuantity} != 0">
+                                <input type="number" th:field="*{count}" width="30%" class="form-control"
+                                       placeholder="주문 수량을 입력하세요"></td>
+                            </div>
+                        </div>
+                        <div align="right" class="col-lg-3">
+                            <button type="button" onclick="addCart()" class="btn btn-success">장바구니 담기</button>
+                            <a th:if="*{stockQuantity} == 0" class="btn btn-success">매진</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- /.card -->
+
+        <div class="card card-outline-secondary my-4">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-lg-3">상품 후기
+                        <span style="float: right"><a th:text="'(총 ' + ${reviewCount} + '개)'"></a></span>
+                        </div>
+                    <div class="col-lg-9" align="right"><a th:href="@{/{id}/reviews/1(id=${itemForm.id})}"
+                                                           class="btn btn-success">더보기</a></div>
+                </div>
+            </div>
+
+            <div th:if="${reviews.size()} == 0" class="card-body">
+                아직 등록된 후기가 없습니다.
+            </div>
+            <div th:if="${reviews} != null" class="card-body">
+                <table class="customTable" border="" frame="void">
+                    <tr th:each="review : ${reviews}">
+                        <td>
+                            <div>
+                                <a style="color: #171a1d"
+                                   th:href="@{/{itemId}/review/{reviewId}(itemId=${review.item.id},reviewId=${review.id})}"
+                                   th:text="${review.title}">후기 제목</a>
+                            </div>
+                            <div>
+                                <small class="text-muted"
+                                       th:text="${#temporals.format(review.date, 'yyyy-MM-dd, HH:mm')}">후기
+                                    작성일자</small>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="card-footer">
+                <div align="left"><a th:href="@{/{id}/review/new(id=${itemForm.id})}" class="btn btn-success">작성하기</a>
+                </div>
+            </div>
+
+            <!-- /.card -->
+
+        </div>
+        <!-- /.col-lg-9 -->
+
+    </div>
+
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+    </div>
+    <!-- /.container -->
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<th:block th:replace="fragments/shopScript :: shopScript"/>
+</body>
+
+</html>

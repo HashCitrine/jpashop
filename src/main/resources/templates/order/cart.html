@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Shop Item - Start Bootstrap Template</title>
+
+    <!-- Bootstrap core CSS -->
+    <!-- Custom styles for this template -->
+    <th:block th:replace="fragments/shopHead :: shopHead"/>
+
+    <style>
+        .submit {
+            padding-top: 16px;
+            padding-bottom: 16px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav th:replace="fragments/shopNavbar :: shopNavbar"/>
+
+<!-- Page Content -->
+<div class="container">
+    <!-- /.col-lg-3 -->
+    <div class="card card-login mx-auto mt-5">
+        <div align="center" class="card-header">상품 주문</div>
+        <div class="card-body">
+            <div>
+                주문 상품
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <colgroup>
+                        <col width="70%"/>
+                        <col width="10%"/>
+                        <col width="10%"/>
+                        <col width="10%"/>
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>상품명</th>
+                        <th>수량</th>
+                        <th>가격</th>
+                        <th>삭제</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="cart : ${carts}">
+                        <td th:text="${cart.item.name}"></td>
+                        <td th:text="${cart.count}"></td>
+                        <td th:text="${cart.unitPrice} + '원'"></td>
+                        <td><a onclick="return confirm('해당 상품을 장바구니에서 삭제 하시겠습니까?');" th:href="@{/{cartId}/remove/(cartId=${cart.id})}" class="btn btn-danger">삭제</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="padding-bottom: 50px">
+                <span style="float: left"><h3 th:text="'총 ' + ${totalPrice} + '원 '"></h3></span>
+                <span style="float: right"><a th:href="@{/order}" class="btn btn-success">구매하기</a>
+            </span>
+            </div>
+
+
+            <!-- Footer -->
+            <footer class="py-5 bg-dark">
+                <div class="container">
+                    <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+                </div>
+                <!-- /.container -->
+            </footer>
+
+            <!-- Bootstrap core JavaScript -->
+            <th:block th:replace="fragments/shopScript :: shopScript"/>
+</body>
+
+</html>
+

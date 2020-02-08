@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Shop Item - Start Bootstrap Template</title>
+
+    <!-- Bootstrap core CSS -->
+    <!-- Custom styles for this template -->
+    <th:block th:replace="fragments/shopHead :: shopHead" />
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav th:replace="fragments/shopNavbar :: shopNavbar" />
+
+<!-- Page Content -->
+<div class="container">
+
+    <th:block th:replace="fragments/shopSidebar :: shopSidebar" />
+    <!-- /.col-lg-3 -->
+        <!-- /.col-lg-3 -->
+
+        <div class="col-lg-9">
+            <div class="container">
+                <div class="card card-login mx-auto mt-5">
+                    <div class="card-header">상품 등록</div>
+                    <div class="card-body">
+                        <form th:action="@{/new}" th:object="${form}" method="post" enctype = multipart/form-data>
+                            <table class="table table-bordered">
+                            <tr><td colspan="4">
+                                <label th:for="name">상품명</label>
+                                <input type="text" th:field="*{name}" class="form-control"
+                                       placeholder="이름을 입력하세요"> </td> </tr>
+                                    <td align="center"><label th:for="price">가격</label></td>
+                                    <td><input type="number" th:field="*{price}" class="form-control"
+                                               placeholder="가격을 입력하세요"></td>
+                                    <td align="center"><label th:for="stockQuantity">수량</label></td>
+                                    <td><input type="number" th:field="*{stockQuantity}" class="form-control"
+                                               placeholder="수량을 입력하세요"></td>
+                                <tr><td th:for="itemImage" align="left" colspan="4">
+                                    <input type="file" th:field="*{itemImage}" id="itemImage" name="itemImage" class="upload-hidden">
+                                </td></tr>
+                            <tr><td colspan="4"><div class="form-group">
+                                <label th:for="memo">제품 설명</label>
+                                <textarea rows="5" th:text="*{memo}" th:field="*{memo}" cols="90" th:wrap="hard" class="form-control" placeholder="제품에 대한 설명을 입력하세요"></textarea>
+                            </div></td> </tr>
+                            </table>
+                            <div align="center">
+                            <button type="submit" class="btn btn-primary">등록</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <!-- /.col-lg-9 -->
+
+    </div>
+
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+    </div>
+    <!-- /.container -->
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<th:block th:replace="fragments/shopScript :: shopScript" />
+</body>
+
+</html>
+

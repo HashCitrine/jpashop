@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Shop Item - Start Bootstrap Template</title>
+
+  <!-- Bootstrap core CSS -->
+  <!-- Custom styles for this template -->
+  <th:block th:replace="fragments/shopHead :: shopHead" />
+
+  <style>
+    .customTable {
+      width: 100%;
+      border: #d7d7d7;
+      border-top-color: #ffffff;
+      border-left-color: #ffffff;
+      border-right-color: #ffffff;
+    }
+  </style>
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav th:replace="fragments/shopNavbar :: shopNavbar" />
+
+<!-- Page Content -->
+<div class="container">
+
+  <th:block th:replace="fragments/shopSidebar :: shopSidebar" />
+  <!-- /.col-lg-3 -->
+
+      <div class="col-lg-9">
+
+        <!-- /.card -->
+        <div class="card card-outline-secondary my-4">
+          <div class="card-header">
+            <div>
+              상품 후기
+              <span style="float: right"><a th:text="'(총 ' + ${reviewCount} + '개)'"></a></span>
+            </div>
+          </div>
+          <div th:if="${reviews.size()} == 0" class="card-body">
+            아직 등록된 후기가 없습니다.
+          </div>
+          <div th:if="${reviews} != null" class="card-body">
+            <table class="customTable" border="" frame="void">
+              <tr th:each="review : ${reviews}">
+                <td>
+                  <div>
+                    <a style="color: #171a1d"
+                       th:href="@{/{itemId}/review/{reviewId}(itemId=${review.item.id},reviewId=${review.id})}"
+                       th:text="${review.title}">후기 제목</a>
+                  </div>
+                  <div>
+                    <small class="text-muted"
+                           th:text="${#temporals.format(review.date, 'yyyy-MM-dd, HH:mm')}">후기
+                      작성일자</small>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="card-footer">
+            <div align="left"><a th:href="@{/{id}/review/new(id=${itemId})}" class="btn btn-success">작성하기</a>
+            </div>
+          </div>
+          <!-- /.card -->
+
+      </div>
+        <div align="center">
+          <a th:href="@{/1}"><<</a>
+          <th:block th:each="num : ${#numbers.sequence(start, end)}">
+            <a th:text="' ' + ${num} + ' '" th:href="@{/{id}/reviews/{page}(id=${itemId},page=${num})}"></a>
+          </th:block>
+          <a th:href="@{/{lastPage}(lastPage=${lastPage})}">>></a>
+        </div>
+      </div>
+      <!-- /.col-lg-9 -->
+
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+<th:block th:replace="fragments/shopScript :: shopScript" />
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" th:fragment="shopNavbar">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">Start Bootstrap</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" th:href="@{/}">Home
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:style="${session.isEmpty() ? 'display:block' : 'display:none'}" class="nav-link" th:href="@{/login}">로그인</a>
+                    </li>
+
+                    <li th:if="${session.login} == true" class="nav-item">
+                        <a class="nav-link" th:href="@{/cart}">장바구니</a>
+                    </li>
+
+                    <li th:if="${session.login} == true" class="nav-item">
+                        <a th:href="@{/admin}" th:text="${session.member.name} +'님 반갑습니다.'" class="nav-link">로그인 유지</a>
+                    </li>
+                    <li th:if="${session.login} == true" class="nav-item">
+                        <a onclick="return confirm('로그아웃 하시겠습니까?')" class="nav-link" th:href="@{/logout}">로그아웃</a>
+                    </li>
+                </ul>
+
+
+
+            </div>
+        </div>
+    </nav>
+</html>

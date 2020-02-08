@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin - Dashboard</title>
+
+    <th:block th:replace="fragments/adminHead :: adminHead"/>
+
+</head>
+
+<body id="page-top">
+
+<nav th:replace="fragments/adminNavbar :: adminNavbar"/>
+
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul th:replace="fragments/adminSidebar :: adminSidebar"/>
+
+    <div id="content-wrapper">
+        <div th:if="${session.member.role} == ${T(shop.jpa.domain.Role).valueOf('ADMIN')}">
+            <!-- 상품 목록 -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <i class="fas fa-table"></i>
+                            상품 목록
+                            <span><a th:text="' (총 ' + ${itemCount} +'개)'"/> </span>
+                        </div>
+                        <div align="right" class="col-lg-9">
+                            <a th:href="@{/admin/items/list}" class="btn btn-success">더보기</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <th:block th:replace="fragments/table :: itemTable"/>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 주문 목록 -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <i class="fas fa-table"></i>
+                            주문 목록
+                            <span><a th:text="' (총 ' + ${orderCount} +'개)'"/> </span>
+                        </div>
+                        <div align="right" class="col-lg-9">
+                            <a th:href="@{/admin/orders/list}" class="btn btn-success">더보기</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <th:block th:replace="fragments/table :: orderTable"/>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 회원 목록 -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <i class="fas fa-table"></i>
+                            회원 목록
+                            <span><a th:text="' (총 ' + ${memberCount} +'명)'"/> </span>
+                        </div>
+                        <div align="right" class="col-lg-9">
+                            <a th:href="@{/admin/members/list}" class="btn btn-success">더보기</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <th:block th:replace="fragments/table :: memberTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 일반 유저 -->
+        <div>
+            <!-- 주문 목록 -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <i class="fas fa-table"></i>
+                            주문한 상품
+                            <span><a th:text="' (총 ' + ${myOrderCount} +'건)'"/> </span>
+                        </div>
+                        <div align="right" class="col-lg-9">
+                            <a th:href="@{/admin/myOrders/list}" class="btn btn-success">더보기</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <th:block th:replace="fragments/table :: myOrderTable"/>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 후기 목록 -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <i class="fas fa-table"></i>
+                            작성한 후기
+                            <span><a th:text="' (총 ' + ${reviewCount} +'개)'"/> </span>
+                        </div>
+                        <div align="right" class="col-lg-9">
+                            <a th:href="@{/admin/reviews/list}" class="btn btn-success">더보기</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <th:block th:replace="fragments/table :: reviewTable"/>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 댓글 목록 -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <i class="fas fa-table"></i>
+                            작성한 댓글
+                            <span><a th:text="' (총 ' + ${commentCount} +'개)'"/> </span>
+                        </div>
+                        <div align="right" class="col-lg-9">
+                            <a th:href="@{/admin/comments/list}" class="btn btn-success">더보기</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <th:block th:replace="fragments/table :: commentTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 일반 유저 -->
+
+    </div>
+</div>
+<!-- /#wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<th:block th:replace="fragments/adminScript :: adminScript"/>
+
+</body>
+
+</html>

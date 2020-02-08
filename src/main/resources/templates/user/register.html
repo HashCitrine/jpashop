@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>SB Admin - Register</title>
+
+  <!-- Custom fonts for this template-->
+  <!-- Custom styles for this template-->
+  <th:block th:replace="fragments/adminHead :: adminHead"/>
+
+  <style>
+    .fieldError {
+      border-color: #bd2130;
+    }
+  </style>
+
+</head>
+
+<body class="bg-dark">
+
+  <div class="container">
+    <div class="card card-register mx-auto mt-5">
+      <div class="card-header">회원가입</div>
+      <div class="card-body">
+        <form role="form" th:action="@{/register}" th:object="${form}" method="post">
+          <div class="form-group">
+            <div class="form-label-group">
+              <input type="text" th:field="*{name}" class="form-control" placeholder="이름"
+                     th:class="${#fields.hasErrors('name')}? 'form-control fieldError' : 'form-control'">
+              <label th:for="name">이름</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-label-group">
+              <input type="email" th:field="*{email}" class="form-control" placeholder="이메일 주소"
+                     th:class="${#fields.hasErrors('email')}? 'form-control fieldError' : 'form-control'">
+              <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Incorrect date</p>
+              <label th:for="email">이메일 주소</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-md-6">
+                <div class="form-label-group">
+                  <input type="password" th:field="*{password}" id="password" class="form-control" placeholder="비밀번호"
+                  th:class="${#fields.hasErrors('password')}? 'form-control fieldError' : 'form-control'">
+                  <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Incorrect date</p>
+                  <label th:for="password">비밀번호</label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-label-group">
+                  <input type="password" th:field="*{confirmPassword}" id="confirmPassword" class="form-control" placeholder="비밀번호 확인"
+                         th:class="${#fields.hasErrors('confirmPassword')}? 'form-control fieldError' : 'form-control'">
+                  <p th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">Incorrect date</p>
+                  <label th:for="confirmPassword">비밀번호 확인</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-block" type="submit">가입</button>
+        </form>
+        <div class="text-center">
+          <a class="d-block small mt-3" href="login">로그인 페이지로 돌아가기</a>
+          <a class="d-block small" href="forgotPassword">비밀번호 찾기</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <!-- Core plugin JavaScript-->
+  <th:block th:replace="fragments/adminScript :: adminScript"/>
+
+</body>
+
+</html>

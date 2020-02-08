@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Shop Item - Start Bootstrap Template</title>
+
+    <!-- Bootstrap core CSS -->
+    <!-- Custom styles for this template -->
+    <th:block th:replace="fragments/shopHead :: shopHead"/>
+
+    <style>
+        .left-margin {
+            margin-left: 15px;
+        }
+
+    </style>
+
+    <script language="javascript">
+
+        var num = $("#num").val();
+
+        function commentView() {
+            if ($('#comment').css("display") == "none") {
+                $('#comment').show();
+            } else {
+                $('#comment').hide();
+            }
+        }
+
+        function replyView(a, b) {
+            if (document.getElementById(b).style.display == 'none') {
+                if (document.getElementById(a).style.display == 'block') {
+                    document.getElementById(a).style.display = 'none'
+                }
+                document.getElementById(b).style.display = 'block';
+            } else {
+                document.getElementById(b).style.display = 'none';
+            }
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav th:replace="fragments/shopNavbar :: shopNavbar"/>
+
+<!-- Page Content -->
+<div class="container">
+
+    <th:block th:replace="fragments/shopSidebar :: shopSidebar"/>
+    <!-- /.col-lg-3 -->
+
+    <div class="col-lg-9">
+
+        <!-- /.card -->
+        <div class="card card-outline-secondary my-4">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-lg-3">상품 후기</div>
+                </div>
+            </div>
+            <div>
+                <div th:object="${review}" class="card-body">
+                    <h2 th:text="${review.title}"></h2>
+                    <p th:text="${review.memo}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim
+                        aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam
+                        aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+                    <small class="text-muted" th:text="${#temporals.format(review.date, 'yyyy-MM-dd, HH:mm')}">Posted by
+                        Anonymous on 3/1/17</small>
+                </div>
+                <div class="card-footer">
+                    <div align="right">
+                        <button onclick="commentView()" class="btn btn-success">댓글보기</button>
+                    </div>
+                    <hr>
+                    <div style="display: block" id="comment">
+                        <form th:object="${form}" method="post"
+                              th:action="@{/{itemId}/review/{reviewId}/0(itemId=${form.itemId},reviewId=${review.id})}">
+                            <div class="row">
+                                <div class="col-lg-10">
+                                    <textarea rows="3" th:text="*{memo}" th:field="*{memo}" cols="70" th:wrap="hard"
+                                              class="form-control" placeholder="댓글을 입력하세요."></textarea>
+                                </div>
+                                <div class="col-lg-2" align="right">
+                                    <button type="submit" class="btn btn-success">작성</button>
+                                </div>
+                                <hr>
+                            </div>
+                        </form>
+                        <hr>
+                        <div th:each="comment : ${comments}">
+
+
+                            <!--     <div th:if="${comment.parent} == 0">    -->
+                            <div th:if="${comment.memo} == null">
+                                <p>댓글이 삭제되었습니다.</p>
+                            </div>
+                            <div th:if="${comment.memo} != null" class="row">
+                                <div th:if="${comment.parent} > 0" class="col-lg-1"></div>
+                                <div class="col-lg-8">
+                                    <small class="test-muted"
+                                           th:text="${#temporals.format(comment.date, 'yyyy-MM-dd, HH:mm')}"></small>
+                                    <p th:text="${comment.member.name}"></p>
+                                </div>
+                                <div th:if="${comment.parent} == 0" class="col-lg-1"></div>
+                                <div align="right" class="col-lg-3">
+                                    <div align="right"
+                                         th:if="${comment.member.id} == ${memberId} OR ${memberRole} == ${T(shop.jpa.domain.Role).valueOf('ADMIN')}">
+                                        <span><button th:data-id="${comment.date}" th:data-date="${comment.id}"
+                                                      onclick="replyView(this.getAttribute('data-date'), this.getAttribute('data-id'))"
+                                                      class="btn btn-primary">수정</button></span>
+                                        <span><a th:href="@{/delete/comment/{commentId}(commentId=${comment.id})}"
+                                                 class="btn btn-danger">삭제</a></span>
+                                    </div>
+                                </div>
+                                <div th:if="${comment.parent} > 0" class="col-lg-1"></div>
+                                <div class="left-margin">
+                                    <span><p th:text="${comment.memo}"/> </span>
+                                    <span th:data-id="${comment.date}" th:data-date="${comment.id}"
+                                          onclick="replyView(this.getAttribute('data-id'), this.getAttribute('data-date'))"
+                                          style="width: 100%"><a style="color: #4e555b">▼답글달기</a></span>
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- 답글 화면 -->
+                            <div style="display: none" th:id="${comment.id}">
+
+                                <form th:object="${form}" method="post"
+                                      th:action="@{/{itemId}/review/{reviewId}/{parentId}/(itemId=${form.itemId},reviewId=${review.id},parentId=${comment.id})}">
+                                    <div class="row">
+                                        <div class="col-lg-10">
+                                                <textarea rows="3" th:text="*{memo}" th:field="*{memo}" th:wrap="hard"
+                                                          cols="70"
+                                                          class="form-control" placeholder="답글을 입력하세요."></textarea>
+                                        </div>
+                                        <div class="col-lg-2" align="right">
+                                            <button type="submit" class="btn btn-success">작성</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <hr>
+                            </div>
+
+                            <!-- 수정 화면 -->
+                            <div style="display: none" th:id="${comment.date}">
+
+                                <form th:object="${updateForm}" method="post"
+                                      th:action="@{/update/comment/{commentId}(commentId=${comment.id})}">
+                                    <div class="row">
+                                        <div class="col-lg-10">
+                                                <textarea rows="3" th:text="${comment.memo}" th:field="*{memo}"
+                                                          cols="70" th:wrap="hard" name="updateComment"
+                                                          class="form-control" placeholder="수정할 내용을 입력하세요."></textarea>
+                                        </div>
+                                        <div class="col-lg-2" align="right">
+                                            <button type="submit" class="btn btn-success">작성</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <hr>
+                            </div>
+
+                            <!--
+                                                        </div>
+                                                        <div th:if="${comment.parent} > 0">
+                                                            <div th:if="${comment.memo} == null">
+                                                                댓글이 삭제되었습니다.
+                                                            </div>
+                                                            <div th:if="${comment.memo} != null" class="row">
+                                                                <div class="col-lg-1"></div>
+                                                                <div class="col-lg-8">
+                                                                    <small class="test-muted"
+                                                                           th:text="${#temporals.format(comment.date, 'yyyy-MM-dd, HH:mm')}"></small>
+                                                                    <p th:text="${comment.member.name}"></p>
+                                                                    <p th:text="' ' + ${comment.memo}"></p>
+                                                                    <hr>
+                                                                </div>
+                                                                <div align="right" class="col-lg-3">
+                                                                    <div align="right" th:if="${comment.member.id} == ${memberId} OR ${memberRole} == ${T(shop.jpa.domain.Role).valueOf('ADMIN')}">
+                                                                    <span><button th:data-id="${comment.date}" th:data-date="${comment.id}"
+                                                                                  onclick="replyView(this.getAttribute('data-date'), this.getAttribute('data-id'))"
+                                                                                  class="btn btn-primary">수정</button></span>
+                                                                        <span><a th:href="@{/delete/comment/{commentId}(commentId=${comment.id})}"
+                                                                                 class="btn btn-danger">삭제</a></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                            -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.card -->
+
+    </div>
+    <!-- /.col-lg-9 -->
+    <!--
+    <div align="center">
+      <a th:href="@{/1}"><<</a>
+      <th:block th:each="num : ${#numbers.sequence(start, end)}">
+        <a th:text="' ' + ${num} + ' '" th:href="@{/{id}/review/{page}(id=${itemId},page=${num})}"></a>
+      </th:block>
+      <a th:href="@{/{lastPage}(lastPage=${lastPage})}">>></a>
+    </div>
+    -->
+</div>
+
+
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+    </div>
+    <!-- /.container -->
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<th:block th:replace="fragments/shopScript :: shopScript"/>
+</body>
+
+</html>

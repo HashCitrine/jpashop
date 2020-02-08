@@ -1,0 +1,43 @@
+spring:
+  tymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/jpashop
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+  properties:
+    hibernate:
+      #      show_sql: true
+      format_sql: true
+
+  servlet:
+    multipart:
+      file-size-threshold: 0
+      max-file-size: 10MB
+      location: Users/TEMP
+
+# 1차 시도
+#  mail:
+#    host: smtp.gmail.com
+#    port: 465
+#    protocol: smtp
+#    from: using1524@gmail.com
+#    username: using1524@gmail.com
+#    password: ajskajs753
+#    test-connection: true
+
+
+custom:
+  uploadPath: /Users/ktm/Desktop/jpa/src/main/resources/static/img
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace

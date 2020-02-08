@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="shopSidebar">
+
+    <div class="row">
+
+        <div class="col-lg-3">
+
+            <h1 class="my-4">Shop</h1>
+            <div class="list-group">
+                <a th:href="@{/shop/1}" class="list-group-item">등록순</a>
+                <a th:href="@{/sale/1}" class="list-group-item">주문순</a>
+                <a th:href="@{review/1}" class="list-group-item">후기순</a>
+            </div>
+
+        </div>
+
+</th:block>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Shop Item - Start Bootstrap Template</title>
+
+    <!-- Bootstrap core CSS -->
+    <!-- Custom styles for this template -->
+    <th:block th:replace="fragments/shopHead :: shopHead"/>
+
+    <script language="JavaScript">
+        function changeStatus(id) {
+            var confirm1 = confirm("주문 상태를 변경하시겠습니까?");
+            if (confirm1 == true) {
+                document.orderUpdate.submit();
+            }
+        }
+
+    </script>
+
+    <style>
+        .submit {
+            padding-top: 16px;
+            padding-bottom: 16px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav th:replace="fragments/shopNavbar :: shopNavbar"/>
+
+<!-- Page Content -->
+<div class="container">
+    <!-- /.col-lg-3 -->
+    <div class="card card-login mx-auto mt-5">
+        <div align="center" class="card-header">상품 주문</div>
+        <div class="card-body">
+            <div>
+                주문 상품
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <colgroup>
+                        <col width="70%"/>
+                        <col width="10%"/>
+                        <col width="20%"/>
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>상품명</th>
+                        <th>수량</th>
+                        <th>가격</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="orderItem : ${orderItems}">
+                        <td th:text="${orderItem.item.name}"></td>
+                        <td th:text="${orderItem.count}"></td>
+                        <td th:text="${orderItem.orderPrice} + '원'"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div th:object="${orderForm}" class="row">
+                <div class="col-lg-6">
+                    주문일
+                    <p th:text="*{order.orderDate}" class="form-control"/></td>
+                    주문자
+                    <p th:text="*{member.name}" class="form-control"/>
+                </div>
+                <div class="col-lg-6">
+                    주소
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <input class="form-control" type="text" th:field="*{postcode}"
+                                   id="sample4_postcode" placeholder="우편번호" readonly>
+                        </div>
+                    </div>
+                    <input class="form-control" type="text" th:field="*{mainAddress}"
+                           id="sample4_roadAddress" placeholder="도로명주소" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-lg-9">
+                    <form th:action="@{/orders/update/{orderId}(orderId=${orderForm.order.id})}"
+                          th:object="${statusForm}" id="orderUpdate" name="orderUpdate"
+                          method="post" class="form-inline">
+                        <div class="form-group mx-sm-1 mb-2">
+                            <select th:if="${orderForm.order.status} != ${T(shop.jpa.domain.OrderStatus).valueOf('CANCEL')}"
+                                    th:field="*{deliveryStatus}" name="statusSelect" class="form-control">
+                                <option value="">주문상태</option>
+                                <option th:each="status : ${statusGroup}"
+                                        th:value="${status}"
+                                        th:text="${status}">option
+                                </option>
+                                <option th:if="${orderForm.order.status} == ${T(shop.jpa.domain.OrderStatus).valueOf('CANCEL')}">
+                                    CANCEL
+                                </option>
+                            </select>
+                            <select th:if="${orderForm.order.status} == ${T(shop.jpa.domain.OrderStatus).valueOf('CANCEL')}"
+                                    class="form-control">
+                                <option>CANCEL</option>
+                            </select>
+                        </div>
+                        <div th:if="${memberRole} == ${T(shop.jpa.domain.Role).valueOf('ADMIN')}">
+                            <button type="button"
+                                    th:if="${orderForm.order.status} != ${T(shop.jpa.domain.OrderStatus).valueOf('CANCEL')}"
+                                    th:onclick="|javascript:changeStatus('{statusForm}')|" class="btn btn-primary mb-2">
+                                변경
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div align="right" class="col-lg-3">
+                    <p th:text="'총 ' + ${orderForm.orderPrice} + '원'"/>
+                </div>
+            </div>
+        </div>
+        <!-- /.col-lg-9 -->
+
+    </div>
+    <div align="center" class="submit">
+        <a type="button" th:if="${orderForm.order.status} != ${T(shop.jpa.domain.OrderStatus).valueOf('CANCEL')} AND ${orderForm.order.delivery.status} == ${T(shop.jpa.domain.DeliveryStatus).valueOf('READY')}"
+           th:href="@{/orders/cancel/{orderId}(orderId=${orderForm.order.id})}" class="btn btn-danger"
+           onclick="return confirm('주문을 취소 하시겠습니까?');">주문 취소</a>
+        <a th:if="${orderForm.order.status} == ${T(shop.jpa.domain.OrderStatus).valueOf('CANCEL')}"
+           th:href="@{/orders/reorder/{orderId}(orderId=${orderForm.order.id})}" class="btn btn-primary"
+           onclick="return confirm('같은 내용으로 상품을 재주문 하시겠습니까?');">재주문</a>
+    </div>
+</div>
+
+<!-- /.container -->
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+    </div>
+    <!-- /.container -->
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<th:block th:replace="fragments/shopScript :: shopScript"/>
+</body>
+
+</html>
+

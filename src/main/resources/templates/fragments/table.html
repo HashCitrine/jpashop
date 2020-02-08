@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- 상품 목록 -->
+<th:block th:fragment="itemTable">
+    <table class="table table-bordered" width="100%" cellspacing="0" style="table-layout: fixed">
+        <colgroup>
+            <col width="10%"/>
+            <col width="20%"/>
+            <col width="40%"/>
+            <col width="10%"/>
+            <col width="10%"/>
+            <col width="10%"/>
+        </colgroup>
+        <thead>
+        <tr>
+            <th>No.</th>
+            <th>등록일</th>
+            <th>상품명</th>
+            <th>재고량</th>
+            <th>수정</th>
+            <th>삭제</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${items}">
+            <td th:text="${item.id}"></td>
+            <td th:text="${#temporals.format(item.date, 'yyyy-MM-dd, HH:mm')}"></td>
+            <td><a th:text="${item.name}" th:href="@{/shop/{itemId}(itemId=${item.id})}" style="color: #040505"></a></td>
+            <td th:text="${item.stockQuantity}"></td>
+            <td align="center">
+                <a onclick="return confirm('수정 하시겠습니까?');" th:href="@{/update/{id} (id=${item.id})}"
+                   class="btn btn-primary"/>수정
+            </td>
+            <td align="center">
+                <a onclick="return confirm('삭제 하시겠습니까?');" th:href="@{/delete/{id} (id=${item.id})}"
+                   class="btn btn-primary btn-danger"/>삭제
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</th:block>
+<!-- 상품 목록 -->
+
+<!-- 주문 목록 -->
+<th:block th:fragment="orderTable">
+    <table class="table table-bordered" width="100%" cellspacing="0">
+        <colgroup>
+            <col width="10%"/>
+            <col width="30%"/>
+            <col width="25%"/>
+            <col width="15%"/>
+            <col width="20%"/>
+        </colgroup>
+        <thead>
+        <tr>
+            <th>No.</th>
+            <th>주문일시</th>
+            <th>주문자</th>
+            <th>주문상태</th>
+            <th>상세정보</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.id}"></td>
+            <td th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd, HH:mm')}"></td>
+            <td th:text="${order.member.name}"></td>
+            <td th:if="${order.status} != ${T(shop.jpa.domain.OrderStatus).valueOf('CANCEL')}"
+                th:text="${order.delivery.Status}"></td>
+            <td th:if="${order.status} == ${T(shop.jpa.domain.OrderStatus).valueOf('CANCEL')}"
+                th:text="${order.status}"></td>
+            <td><a class="btn btn-primary"
+                   th:href="@{/orders/update/{orderId}(orderId=${order.id})}">상세보기</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</th:block>
+<!-- 주문 목록 -->
+
+<!-- 회원 목록 -->
+<th:block th:fragment="memberTable">
+    <table class="table table-bordered" width="100%" cellspacing="0">
+        <colgroup>
+            <col width="10%"/>
+            <col width="20%"/>
+            <col width="30%"/>
+            <col width="30%"/>
+            <col width="10%"/>
+        </colgroup>
+        <thead>
+        <tr>
+            <th>No.</th>
+            <th>이름</th>
+            <th>아이디</th>
+            <th>가입일</th>
+            <th>수정</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="member : ${members}">
+            <td th:text="${member.id}"></td>
+            <td th:text="${member.name}"></td>
+            <td th:text="${member.email}"></td>
+            <td th:text="${#temporals.format(member.date, 'yyyy-MM-dd, HH:mm')}"></td>
+            <form method="post" th:action="@{/members/update/{id} (id=${member.id})}">
+                <td>
+                    <button onclick="return confirm('수정 하시겠습니까?');" class="btn btn-primary btn-block" type="submit"/>
+                    수정
+                </td>
+            </form>
+        </tr>
+        </tbody>
+    </table>
+</th:block>
+<!-- 회원 목록 -->
+
+<!-- 주문한 상품 목록 -->
+<th:block th:fragment="myOrderTable">
+    <table class="table table-bordered" width="100%" cellspacing="0">
+        <colgroup>
+            <col width="10%"/>
+            <col width="30%"/>
+            <col width="25%"/>
+            <col width="15%"/>
+            <col width="20%"/>
+        </colgroup>
+        <thead>
+        <tr>
+            <th>No.</th>
+            <th>주문일</th>
+            <th>주문자</th>
+            <th>주문상태</th>
+            <th>상세정보</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${myOrders}">
+            <td th:text="${order.id}"></td>
+            <td th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd, HH:mm')}"></td>
+            <td th:text="${order.member.name}"></td>
+            <td th:if="${order.status} != ${T(shop.jpa.domain.OrderStatus).valueOf('CANCEL')}"
+                th:text="${order.delivery.Status}"></td>
+            <td th:if="${order.status} == ${T(shop.jpa.domain.OrderStatus).valueOf('CANCEL')}"
+                th:text="${order.status}"></td>
+            <td align="center"><a class="btn btn-primary"
+                   th:href="@{/orders/update/{orderId}(orderId=${order.id})}">상세보기</a></td>
+        </tr>
+        </tbody>
+    </table>
+</th:block>
+<!-- 주문한 상품 목록 -->
+
+<!-- 후기 목록 -->
+<th:block th:fragment="reviewTable">
+    <table class="table table-bordered" width="100%" cellspacing="0" style="table-layout: fixed">
+        <colgroup>
+            <col width="20%"/>
+            <col width="30%"/>
+            <col width="30%"/>
+            <col width="10%"/>
+            <col width="10%"/>
+        </colgroup>
+        <thead>
+        <tr>
+            <th>작성일</th>
+            <th>상품명</th>
+            <th>제목</th>
+            <th>수정</th>
+            <th>삭제</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="review : ${reviews}">
+            <td th:text="${#temporals.format(review.date, 'yyyy-MM-dd, HH:mm')}"></td>
+            <td><a th:text="${review.item.name}" th:href="@{/shop/{itemId}(itemId=${review.item.id})}"
+            style="color: #040505;"></a></td>
+            <td><a th:text="${review.title}" th:href="@{/{itemId}/review/{reviewId}(itemId=${review.item.id}, reviewId=${review.id})}"
+            style="color: #040505"></a></td>
+            <td align="center">
+                <a onclick="return confirm('후기를 수정 하시겠습니까?');" th:href="@{/update/review/{id}(id=${review.id})}"
+                   class="btn btn-primary"/>수정
+            </td>
+            <td align="center">
+                <a onclick="return confirm('후기를 삭제 하시겠습니까?')" th:href="@{/delete/{id}(id=${review.id})}"
+                   class="btn btn-primary btn-danger"/>삭제
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</th:block>
+<!-- 후기 목록 -->
+
+<!-- 댓글 목록 -->
+<th:block th:fragment="commentTable">
+    <table class="table table-bordered" width="100%" cellspacing="0" style="table-layout: fixed">
+        <colgroup>
+            <col width="20%"/>
+            <col width="30%"/>
+            <col width="40%"/>
+            <col width="10%"/>
+        </colgroup>
+        <thead>
+        <tr>
+            <th>작성일</th>
+            <th>후기 제목</th>
+            <th>내용</th>
+            <th>삭제</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="comment : ${comments}">
+            <div th:if="${comment.memo} != null">
+            <td th:text="${#temporals.format(comment.date, 'yyyy-MM-dd, HH:mm')}"></td>
+            <td><a th:href="@{/{itemId}/review/{reviewId}(itemId=${comment.review.item.id}, reviewId=${comment.review.id})}"
+                   th:text="${comment.review.title}" style="color: #040505;"></a></td>
+            <td><a th:text="${comment.memo}" th:href="@{/{itemId}/review/{reviewId}(itemId=${comment.review.item.id}, reviewId=${comment.review.id})}"
+                   style="color: #040505"></a> </td>
+            <td align="center">
+                <a onclick="return confirm('댓글을 삭제 하시겠습니까?')" th:href="@{/delete/comment/{commentId}(commentId=${comment.id})}"
+                   class="btn btn-primary btn-danger"/>삭제
+            </td>
+            </div>
+        </tr>
+        </tbody>
+    </table>
+</th:block>
+<!-- 댓글 목록 -->
