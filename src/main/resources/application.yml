@@ -1,21 +1,10 @@
 spring:
-  tymeleaf:
-    prefix: classpath:/templates/
-    suffix: .html
-
-  datasource:
-    url: jdbc:h2:tcp://localhost/~/jpashop
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
-
+  profiles:
+    active: local # 기본 환경 선택
   jpa:
-    hibernate:
-      ddl-auto: create
-  properties:
-    hibernate:
-      #      show_sql: true
-      format_sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
   servlet:
     multipart:
@@ -23,21 +12,38 @@ spring:
       max-file-size: 10MB
       location: Users/TEMP
 
-# 1차 시도
-#  mail:
-#    host: smtp.gmail.com
-#    port: 465
-#    protocol: smtp
-#    from: using1524@gmail.com
-#    username: using1524@gmail.com
-#    password: ajskajs753
-#    test-connection: true
-
-
 custom:
   uploadPath: /Users/ktm/Desktop/jpa/src/main/resources/static/img
 
-logging:
-  level:
-    org.hibernate.SQL: debug
-    org.hibernate.type: trace
+
+# local 환경
+---
+spring:
+  profiles: local
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: test
+    password: test1234
+    url: jdbc:mariadb://springboot.ch7o54aitash.ap-northeast-2.rds.amazonaws.com:3306/springboot
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+  h2:
+    console:
+      enabled: true
+
+# 운영 환경
+---
+spring.profiles: set1
+spring.profiles.include: real-db
+
+server:
+  port: 8081
+
+---
+spring.profiles: set2
+spring.profiles.include: real-db
+
+server:
+  port: 8082
