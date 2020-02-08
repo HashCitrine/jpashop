@@ -27,18 +27,12 @@ public class HomeController {
 
     // item page
     @GetMapping(value = "/")
-    public String home(HttpSession session, Model model) {
+    public String home() {
+        return "redirect:/home/1";
+    }
 
-        /*
-        for(int i = 1; i < 100; i++) {
-            Item item = new Item();
-            item.setName("" + i);
-            itemService.saveItem(item);
-        }
-
-         */
-
-
+    @GetMapping(value = "/home/")
+    public String homeRedirect() {
         return "redirect:/home/1";
     }
 

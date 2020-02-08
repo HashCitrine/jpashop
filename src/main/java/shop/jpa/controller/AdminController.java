@@ -91,6 +91,10 @@ public class AdminController {
 
     @GetMapping("members/list/{page}")
     public String memberList(@PathVariable("page") int page, Model model, HttpSession session) {
+        if(memberService.notAdmin(session)) {
+            return "redirect:/error";
+        }
+
         // member 목록 & 페이징
         List<Member> findMember = memberService.findMembers();
         List<?> members = pagingService.getBoardPage(findMember, page, this.unit, this.viewPage, model);
@@ -112,6 +116,10 @@ public class AdminController {
 
     @GetMapping("items/list/{page}")
     public String itemList(@PathVariable("page") int page, Model model, HttpSession session) {
+        if(memberService.notAdmin(session)) {
+            return "redirect:/error";
+        }
+
         // item 목록 & 페이징
         List<Item> findItem = itemService.findItems();
         List<?> items = pagingService.getBoardPage(findItem, page, this.unit, this.viewPage, model);
@@ -134,6 +142,10 @@ public class AdminController {
 
     @GetMapping("orders/list/{page}")
     public String orderList(@PathVariable("page") int page, Model model, HttpSession session) {
+        if(memberService.notAdmin(session)) {
+            return "redirect:/error";
+        }
+
         // order 목록 & 페이징
         List<Order> findOrder = orderService.findOrders();
         List<?> orders = pagingService.getBoardPage(findOrder, page, unit, viewPage, model);

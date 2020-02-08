@@ -15,11 +15,16 @@
     <th:block th:replace="fragments/shopHead :: shopHead"/>
 
     <script language="JavaScript">
-        function addCart() {
-            var confirm1 = confirm("장바구니에 해당 상품을 담으시겠습니까?");
-            if (confirm1 == true) {
+        function addCart(stock, count) {
+            if(count == 0) {
+                alert("1개 이상 주문하실 수 있습니다.");
+                location.reload();
+            }
+            if (stock - count < 0) {
+                alert("재고가 부족합니다. 주문 수량을 확인해주세요.");
+                location.reload();
+            } else if (confirm("장바구니에 해당 상품을 담으시겠습니까?")) {
                 document.orderItem.submit();
-
             }
         }
 
@@ -71,8 +76,9 @@
                             </div>
                         </div>
                         <div align="right" class="col-lg-3">
-                            <button type="button" onclick="addCart()" class="btn btn-success">장바구니 담기</button>
-                            <a th:if="*{stockQuantity} == 0" class="btn btn-success">매진</a>
+                            <button type="button" onclick="addCart(this.getAttribute('data-stock')), this.getAttribute('data-count')" class="btn btn-success"
+                            th:data-stock="*{stockQuantity}" th:data-count="*{count}">장바구니 담기</button>
+                            <a th:if="*{stockQuantity} == 0" href="#" class="btn btn-success">매진</a>
                         </div>
                     </div>
                 </div>

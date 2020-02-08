@@ -78,6 +78,7 @@ public class ItemController {
         itemForm.setName(item.getName());
         itemForm.setPrice((item.getPrice()));
         itemForm.setStockQuantity(item.getStockQuantity());
+        itemForm.setCount(1);
         itemForm.setMemo(item.getMemo());
         itemForm.setItemImageAddress(item.getItemImage());
         model.addAttribute("itemForm", itemForm);
