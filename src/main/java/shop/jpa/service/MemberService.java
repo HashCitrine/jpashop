@@ -2,22 +2,13 @@ package shop.jpa.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMailMessage;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
-import shop.jpa.EmailConfig;
-import shop.jpa.MailConfig;
-import shop.jpa.domain.Comment;
 import shop.jpa.domain.Member;
-import shop.jpa.domain.Review;
 import shop.jpa.domain.Role;
-import shop.jpa.domain.item.Item;
 import shop.jpa.repository.MemberRepository;
-import shop.jpa.repository.ReviewRepository;
 
-import javax.mail.Address;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 import java.security.MessageDigest;

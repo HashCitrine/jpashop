@@ -58,35 +58,8 @@ public class HomeController {
 
     @GetMapping("shop")
     public String shopping() {
-        return "redirect:/";
+        return "redirect:/home/1";
     }
-
-
-    // others
-    @GetMapping("404")
-    public String error() {
-        return "others/error";
-    }
-
-    @GetMapping("blank")
-    public String blank() {
-        return "others/blank";
-    }
-
-    @GetMapping("charts")
-    public String charts() {
-        return "charts";
-    }
-
-    private final OrderService orderService;
-
-    @GetMapping("/ttt")
-    public String orderList(@ModelAttribute("orderSearch") OrderSearch orderSearch, Model model) {
-        List<Order> orders = orderService.findSortOrders(orderSearch);
-        model.addAttribute("orders", orders);
-        return "test";
-    }
-
 
     // '반영 되었습니다.' 메시지 후 이전 페이지로
     @GetMapping("back")
