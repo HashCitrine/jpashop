@@ -15,7 +15,6 @@ spring:
 custom:
   uploadPath: /Users/ktm/Desktop/jpa/src/main/resources/static/img
 
-
 # local 환경
 ---
 spring:
