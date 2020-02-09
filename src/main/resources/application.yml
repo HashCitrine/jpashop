@@ -34,18 +34,3 @@ spring:
   h2:
     console:
       enabled: true
-
-# 운영 환경
----
-spring.profiles: set1
-spring.profiles.include: real-db
-
-server:
-  port: 8081
-
----
-spring.profiles: set2
-spring.profiles.include: real-db
-
-server:
-  port: 8082
