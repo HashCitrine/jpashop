@@ -21,9 +21,9 @@ notifications:
       - using1524@gmail.com
 
 before_deploy:
-  - zip -r springboot-webservice *
+  - zip -r jpashop *
   - mkdir -p deploy
-  - mv springboot-webservice.zip deploy/springboot-webservice.zip
+  - mv jpashop.zip deploy/jpashop.zip
 
 deploy:
   - provider: s3
