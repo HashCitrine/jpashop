@@ -76,10 +76,11 @@
                             <h4 class="card-title">
                                 <a th:text="${item.name}" th:href="@{/shop/{id}(id=${item.id})}"> 아이템</a>
                             </h4>
+                            <h5 th:text="${item.price}">₩10,000</h5>
                             <p th:text="${item.memo}" class="card-text">제품에 대한 간단한 설명</p>
                         </div>
-                        <div align="right" class="card-footer">
-                            <h5 th:text="${item.price} + '원'">₩10,000</h5>
+                        <div class="card-footer">
+                            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
                         </div>
                     </div>
                 </div>

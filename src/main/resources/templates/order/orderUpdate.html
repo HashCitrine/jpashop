@@ -111,7 +111,7 @@
                                 <option>CANCEL</option>
                             </select>
                         </div>
-                        <div th:if="${session.member.role} == ${T(shop.jpa.domain.Role).valueOf('ADMIN')}">
+                        <div th:if="${memberRole} == ${T(shop.jpa.domain.Role).valueOf('ADMIN')}">
                             <button type="button"
                                     th:if="${orderForm.order.status} != ${T(shop.jpa.domain.OrderStatus).valueOf('CANCEL')}"
                                     th:onclick="|javascript:changeStatus('{statusForm}')|" class="btn btn-primary mb-2">

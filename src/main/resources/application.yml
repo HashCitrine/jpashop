@@ -1,21 +1,20 @@
 spring:
   profiles:
     active: local # 기본 환경 선택
-
-custom:
-  #  uploadPath: /Users/ktm/Desktop/jpa/src/main/resources/static/img
-  uploadPath: /home/ec2-user/app/git/jpashop/src/main/resources/static/img
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
   servlet:
     multipart:
       file-size-threshold: 0
       max-file-size: 10MB
       location: Users/TEMP
-    
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+custom:
+  uploadPath: /Users/ktm/Desktop/jpa/src/main/resources/static/img
+
 
 # local 환경
 ---

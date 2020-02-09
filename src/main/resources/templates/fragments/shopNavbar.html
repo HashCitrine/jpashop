@@ -15,24 +15,17 @@
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
-
                     <li>
                         <a th:style="${session.isEmpty() ? 'display:block' : 'display:none'}" class="nav-link" th:href="@{/login}">로그인</a>
-                    </li>
-
-                    <li th:if="${session.login} == true" class="nav-item">
-                        <a class="nav-link" th:href="@{/new}">상품 추가</a>
                     </li>
 
                     <li th:if="${session.login} == true" class="nav-item">
                         <a class="nav-link" th:href="@{/cart}">장바구니</a>
                     </li>
 
-
                     <li th:if="${session.login} == true" class="nav-item">
                         <a th:href="@{/admin}" th:text="${session.member.name} +'님 반갑습니다.'" class="nav-link">로그인 유지</a>
                     </li>
-
                     <li th:if="${session.login} == true" class="nav-item">
                         <a onclick="return confirm('로그아웃 하시겠습니까?')" class="nav-link" th:href="@{/logout}">로그아웃</a>
                     </li>

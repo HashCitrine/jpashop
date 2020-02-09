@@ -280,11 +280,4 @@ public class MemberService {
 
         return shaPassword;
     }
-
-    public Boolean notAdmin(HttpSession session) {
-        if(getLoginMember(session).getRole() == Role.ADMIN) {
-            return false;
-        }
-        return true;
-    }
 }
