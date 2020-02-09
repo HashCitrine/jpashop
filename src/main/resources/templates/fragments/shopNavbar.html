@@ -20,6 +20,9 @@
                     </li>
 
                     <li th:if="${session.login} == true" class="nav-item">
+                        <a class="nav-link" th:href="@{/new}">상품 추가</a>
+                    </li>
+                    <li th:if="${session.login} == true" class="nav-item">
                         <a class="nav-link" th:href="@{/cart}">장바구니</a>
                     </li>
 

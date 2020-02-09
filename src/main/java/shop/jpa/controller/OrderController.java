@@ -3,11 +3,14 @@ package shop.jpa.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import shop.jpa.domain.*;
+import shop.jpa.domain.item.Item;
 import shop.jpa.form.ItemForm;
 import shop.jpa.form.OrderForm;
 import shop.jpa.form.StatusForm;
@@ -75,7 +78,19 @@ public class OrderController {
 
     // 상품 구매
     @PostMapping("/buy")
-    public String orderItem(@ModelAttribute("form") OrderForm form, Model model, HttpSession session) {
+    public String orderItem(@ModelAttribute("form") OrderForm form, Model model, HttpSession session, BindingResult result) {
+
+        if(result.hasErrors()) {
+            return "order/orderPage";
+        }
+
+        Item item = itemService.findOne(form.getItem().getId());
+        if(item.getStockQuantity() - form.getCount() < 0) {
+            FieldError error = new FieldError("form", "orderPrice", "재고량이 부족합니다. 남은 수량을 확인해주세요.");
+            result.addError(error);
+            return "order/orderPage";
+        }
+
         Address address = new Address(form.getMainAddress() + form.getExtraAddress(), form.getPostcode());
 
         Member member = memberService.getLoginMember(session);

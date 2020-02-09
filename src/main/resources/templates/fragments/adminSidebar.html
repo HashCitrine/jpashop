@@ -15,6 +15,13 @@
     </li>
 
     <div th:if="${session.member.role} == ${T(shop.jpa.domain.Role).valueOf('ADMIN')}">
+
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/new}">
+                <i class="fas fa-fw fa-table"></i>
+                <span>상품 추가</span></a>
+        </li>
+
         <li class="nav-item">
             <a class="nav-link" th:href="@{/members/list}">
                 <i class="fas fa-fw fa-table"></i>
