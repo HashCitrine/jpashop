@@ -1,6 +1,7 @@
 spring:
   profiles:
     active: local # 기본 환경 선택
+    include: real-db
   jpa:
     properties:
       hibernate:
@@ -14,8 +15,7 @@ custom:
 # local 환경
 ---
 spring:
-  profiles: local
-  datasource:
+  spring.profiles: local
   jpa:
     show-sql: true
     hibernate:
