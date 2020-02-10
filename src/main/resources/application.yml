@@ -2,6 +2,9 @@ spring:
   profiles:
     active: local # 기본 환경 선택
 
+  datasource:
+    data: classpath:table.sql
+
   servlet:
     multipart:
       file-size-threshold: 0
@@ -20,7 +23,7 @@ custom:
 
 ---
 spring:
-  spring.profiles: local
+  profiles: local
   jpa:
     show-sql: true
     hibernate:
