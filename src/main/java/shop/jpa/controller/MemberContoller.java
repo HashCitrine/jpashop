@@ -162,6 +162,12 @@ public class MemberContoller {
             return "email/resendEmail";
         }
 
+        if (memberService.findByEmail(form.getEmail()).get(0).getVerify()) {
+            FieldError error = new FieldError("form", "email", "인증된 회원입니다.");
+            result.addError(error);
+            return "email/resendEmail";
+        }
+
         Member member = memberService.findByEmail(form.getEmail()).get(0);
 
         String code = UUID.randomUUID().toString();

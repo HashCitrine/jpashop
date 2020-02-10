@@ -30,12 +30,17 @@ public class EmailConfig {
     @Value("${mail.smtp.socketFactory.fallback}")
     private boolean fallback;
 
+    @Value("${email}")
+    private String email;
+    @Value("${password}")
+    private String password;
+
     @Bean
     public JavaMailSender javaMailService() {
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
         javaMailSender.setHost("smtp.gmail.com");
-        javaMailSender.setUsername("using1524@gmail.com");
-        javaMailSender.setPassword("rlskrls!753");
+        javaMailSender.setUsername(email);
+        javaMailSender.setPassword(password);
         javaMailSender.setPort(port);
         pt.put("mail.smtp.socketFactory.port", socketPort);
         pt.put("mail.smtp.auth", auth);
