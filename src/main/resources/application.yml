@@ -1,7 +1,12 @@
 spring:
   profiles:
     active: local # 기본 환경 선택
-    include: real-db
+
+  servlet:
+    multipart:
+      file-size-threshold: 0
+      max-file-size: 10MB
+      location: Users/TEMP
   jpa:
     properties:
       hibernate:
@@ -12,7 +17,6 @@ spring:
 custom:
   uploadPath: /Users/ktm/Desktop/jpa/src/main/resources/static/img
 
-# local 환경
 ---
 spring:
   spring.profiles: local
@@ -20,11 +24,9 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create-drop
-  h2:
-    console:
-      enabled: true
-  servlet:
-    multipart:
-      file-size-threshold: 0
-      max-file-size: 10MB
-      location: Users/TEMP
+#  h2:
+#    console:
+#      enabled: true
+
+
+

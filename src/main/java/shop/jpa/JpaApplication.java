@@ -2,16 +2,19 @@ package shop.jpa;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 
 @SpringBootApplication
 public class JpaApplication {
 
-	public static final String APPLICATION_LOCATIONS = "spring.config.location="
-			+ "classpath:application.yml,"
-			+ "/app/config/jpashop/real-application.yml";
+    public static final String APPLICATION_LOCATIONS = "spring.config.location="
+            + "classpath:application.yml,"
+            + "/app/config/jpashop/real-application.yml";
 
-	public static void main(String[] args) {
-		SpringApplication.run(JpaApplication.class, args);
-	}
+    public static void main(String[] args) {
+        new SpringApplicationBuilder(JpaApplication.class)
+                .properties(APPLICATION_LOCATIONS)
+                .run(args);
+    }
 
 }
