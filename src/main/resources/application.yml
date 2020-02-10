@@ -1,32 +1,21 @@
-custom:
-  uploadPath: /Users/ktm/Desktop/jpa/src/main/resources/static/img
-
 spring:
   profiles:
     active: local # 기본 환경 선택
-
-  servlet:
-    multipart:
-      file-size-threshold: 0
-      max-file-size: 10MB
-      location: Users/TEMP
-
   jpa:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-
-
+  tymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+custom:
+  uploadPath: /Users/ktm/Desktop/jpa/src/main/resources/static/img
 
 # local 환경
 ---
 spring:
   profiles: local
   datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    username: test
-    password: test1234
-    url: jdbc:mariadb://springboot.ch7o54aitash.ap-northeast-2.rds.amazonaws.com:3306/springboot
   jpa:
     show-sql: true
     hibernate:
@@ -34,3 +23,8 @@ spring:
   h2:
     console:
       enabled: true
+  servlet:
+    multipart:
+      file-size-threshold: 0
+      max-file-size: 10MB
+      location: Users/TEMP
