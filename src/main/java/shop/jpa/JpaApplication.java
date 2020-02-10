@@ -9,8 +9,7 @@ public class JpaApplication {
 
     public static final String APPLICATION_LOCATIONS = "spring.config.location="
             + "classpath:application.yml,"
-            + "/home/ec2-user/app/config/db.yml,"
-            + "/app/config/jpashop/real-application.yml";
+            + "/home/ec2-user/app/config/db.yml";
 
     public static void main(String[] args) {
         new SpringApplicationBuilder(JpaApplication.class)

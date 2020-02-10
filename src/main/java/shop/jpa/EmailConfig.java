@@ -30,9 +30,9 @@ public class EmailConfig {
     @Value("${mail.smtp.socketFactory.fallback}")
     private boolean fallback;
 
-    @Value("${email}")
+    @Value("${custom.email}")
     private String email;
-    @Value("${password}")
+    @Value("${custom.password}")
     private String password;
 
     @Bean
