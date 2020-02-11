@@ -77,15 +77,15 @@
 
                 <div th:if="${end} > 1" align="center">
                     <span th:if="${page} != 1">
-                    <a th:href="@{/{resetPage}(resetPage=${resetPage})}"><<</a>&nbsp;
-                    <a th:href="@{/{previous}(previous=${previous})}"><</a>&nbsp;
+                    <a th:href="@{/{sort}/{resetPage}(sort=${sort}, resetPage=${resetPage})}"><<</a>&nbsp;
+                    <a th:href="@{/{sort}/{previous}(sort=${sort},previous=${previous})}">이전</a>&nbsp;
                     </span>
                 <th:block th:each="num : ${#numbers.sequence(start, end)}">
-                    <a th:text="' ' + ${num} + ' '" th:href="@{/{page} (page=${num})}"></a>
+                    <a th:text="' ' + ${num} + ' '" th:href="@{/{sort}/{page} (sort=${sort}, page=${num})}"></a>
                 </th:block>&nbsp;
                     <span th:if="${page} != ${lastPage}">
-                    <a th:href="@{/{next}(next=${next})}">></a>&nbsp;
-                    <a th:href="@{/{lastPage}(lastPage=${lastPage})}">>></a>
+                    <a th:href="@{/{sort}/{next}(sort=${sort},next=${next})}">다음</a>&nbsp;
+                    <a th:href="@{/{sort}/{lastPage}(sort=${sort},lastPage=${lastPage})}">>></a>
                     </span>
                 </div>
             <!-- /.row -->

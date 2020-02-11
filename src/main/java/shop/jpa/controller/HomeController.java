@@ -36,22 +36,26 @@ public class HomeController {
         List<?> items = pagingService.getBoardPage(itemService.findItems(), page, this.maxItem, this.viewPage, model);
 
         model.addAttribute("items", items);
+        model.addAttribute("sort", "home");
         return "index";
     }
 
-    @GetMapping(value = "/home/review/{page}")
+    @GetMapping(value = "/review/{page}")
     public String orderByReview(@PathVariable("page") int page, HttpSession session, Model model) {
         List<?> items = pagingService.getBoardPage(itemService.orderByReview(), page, this.maxItem, this.viewPage, model);
 
         model.addAttribute("items", items);
+        model.addAttribute("sort", "review");
         return "index";
     }
 
-    @GetMapping(value = "/home/sale/{page}")
+    @GetMapping(value = "/sale/{page}")
     public String orderBySale(@PathVariable("page") int page, HttpSession session, Model model) {
         List<?> items = pagingService.getBoardPage(itemService.orderBySaleCount(), page, this.maxItem, this.viewPage, model);
 
         model.addAttribute("items", items);
+        model.addAttribute("sort", "sale");
+
         return "index";
     }
 
