@@ -11,6 +11,7 @@ import shop.jpa.repository.OrderSearch;
 import shop.jpa.service.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -31,12 +32,19 @@ public class HomeController {
         return "redirect:/home/1";
     }
 
-    @GetMapping(value = "/home/{page}")
-    public String homePage(@PathVariable("page") int page, HttpSession session, Model model) {
-        List<?> items = pagingService.getBoardPage(itemService.findItems(), page, this.maxItem, this.viewPage, model);
+    @GetMapping(value = "/{sort}/{page}")
+    public String homePage(@PathVariable("page") int page, @PathVariable("sort") String sort, HttpSession session, Model model) {
+        List<?> items = new ArrayList<>();
 
-        model.addAttribute("items", items);
-        model.addAttribute("sort", "home");
+        try {
+            items = pagingService.getBoardPage(itemService.findBySort(sort), page, this.maxItem, this.viewPage, model);
+            model.addAttribute("items", items);
+            model.addAttribute("sort", sort);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         return "index";
     }
 
@@ -67,7 +75,7 @@ public class HomeController {
 
     // '반영 되었습니다.' 메시지 후 이전 페이지로
     @GetMapping("back")
-    public String back(){
+    public String back() {
         return "others/back";
     }
 

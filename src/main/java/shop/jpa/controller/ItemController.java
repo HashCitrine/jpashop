@@ -8,8 +8,11 @@ import org.springframework.web.bind.annotation.*;
 import shop.jpa.domain.Comment;
 import shop.jpa.domain.Member;
 import shop.jpa.domain.Review;
+import shop.jpa.domain.Role;
+import shop.jpa.domain.item.Album;
 import shop.jpa.domain.item.Book;
 import shop.jpa.domain.item.Item;
+import shop.jpa.domain.item.Movie;
 import shop.jpa.form.CommentForm;
 import shop.jpa.form.ItemForm;
 import shop.jpa.form.ReviewForm;
@@ -30,17 +33,33 @@ public class ItemController {
     private final CommentService commentService;
     private final PagingService pagingService;
 
-    @GetMapping(value="new")
-    public String createItemForm(Model model, HttpSession session){
+    @GetMapping(value = "new")
+    public String createItemForm(Model model, HttpSession session) {
         model.addAttribute("form", new ItemForm());
         return "item/createItem";
     }
 
 
     // 상품 등록
-    @PostMapping(value="/new")
+    @PostMapping(value = "/new")
     public String createItem(@Valid @ModelAttribute("form") ItemForm form, Model model, HttpSession session) throws Exception {
         Item item = new Item();
+
+        System.out.println(form.getCatergory());
+        switch (form.getCatergory()) {
+            case 1:
+                item = new Book();
+                break;
+            case 2:
+                item = new Album();
+                break;
+            case 3:
+                item = new Movie();
+                break;
+            default:
+                return "redirect:/error";
+        }
+
         item.setName(form.getName());
         item.setPrice(form.getPrice());
         item.setStockQuantity(form.getStockQuantity());
@@ -60,7 +79,7 @@ public class ItemController {
     // 아이템 단독창
     @GetMapping("/shop/{itemId}")
     public String viewItem(@PathVariable("itemId") Long itemId, Model model, HttpSession session) {
-        Book item = (Book) itemService.findOne(itemId);
+        Item item = itemService.findOne(itemId);
 
         ItemForm itemForm = new ItemForm();
         itemForm.setId(item.getId());
@@ -85,7 +104,10 @@ public class ItemController {
     상품 수정 폼
      */
     @GetMapping(value = "/update/{itemId}")
-    public String updateItemForm(@PathVariable("itemId") Long itemId, Model model) {
+    public String updateItemForm(@PathVariable("itemId") Long itemId, Model model, HttpSession session) {
+        if(memberService.getRole(session) != Role.ADMIN) {
+            return "others/needAdmin";
+        }
         Book updateItem = (Book) itemService.findOne(itemId);
 
         ItemForm form = new ItemForm();
@@ -105,18 +127,10 @@ public class ItemController {
          */
 
     @PostMapping(value = "/update/{itemId}")
-    public String updateItem(@ModelAttribute("form") ItemForm form, @PathVariable("itemId") Long itemId) {
-        /* merge 병합 방법
-        Book book = new Book();
-        book.setId(form.getId());
-        book.setName(form.getName());
-        book.setPrice(form.getPrice());
-        book.setStockQuantity(form.getStockQuantity());
-        book.setAuthor(form.getAuthor());
-        book.setIsbn(form.getIsbn());
-
-        itemService.saveItem(book);
-         */
+    public String updateItem(@ModelAttribute("form") ItemForm form, @PathVariable("itemId") Long itemId, HttpSession session) {
+        if(memberService.getRole(session) != Role.ADMIN) {
+            return "others/needAdmin";
+        }
 
         // 변경 감지 방법
         itemService.updateItem(itemId, form.getName(), form.getPrice(), form.getStockQuantity(), form.getMemo());
@@ -127,7 +141,10 @@ public class ItemController {
 
     // 상품 삭제
     @GetMapping(value = "/delete/{itemId}")
-    public String deleteItem(@PathVariable("itemId") Long itemId) {
+    public String deleteItem(@PathVariable("itemId") Long itemId, HttpSession session) {
+        if(memberService.getRole(session) != Role.ADMIN) {
+            return "others/needAdmin";
+        }
         itemService.deleteItem(itemId);
         return "redirect:/admin/";
 
@@ -157,10 +174,13 @@ public class ItemController {
     // 리뷰 등록폼
     @GetMapping("/{itemId}/review/new")
     public String createReviewForm(@PathVariable("itemId") Long itemId, Model model, HttpSession session) {
+        if(memberService.getLoginMember(session) == null) {
+            return "others/needLogin";
+        }
         ReviewForm form = new ReviewForm();
         form.setItemId(itemId);
 
-        model.addAttribute("form",form);
+        model.addAttribute("form", form);
 
         return "review/createReview";
     }
@@ -168,6 +188,9 @@ public class ItemController {
     // 리뷰 등록
     @PostMapping("/{itemId}/review/new")
     public String createReview(@PathVariable("itemId") Long itemId, @ModelAttribute("form") ReviewForm form, Model model, HttpSession session) {
+        if(memberService.getLoginMember(session) == null) {
+            return "others/needLogin";
+        }
         Long memberId = memberService.getLoginMemberId(session);
         Review review = new Review();
 
@@ -189,10 +212,13 @@ public class ItemController {
     // 리뷰 수정폼
     @GetMapping("/update/review/{reviewId}}")
     public String updateReviewForm(@PathVariable("reviewId") Long reviewId, Model model, HttpSession session) {
+        if(memberService.getLoginMember(session) == null) {
+            return "others/needLogin";
+        }
         Long memberId = memberService.getLoginMemberId(session);
         Review review = reviewService.findOne(reviewId);
 
-        if(memberId != review.getMember().getId() || session.getAttribute("Role").equals("ADMIN")){
+        if (memberId != review.getMember().getId() || session.getAttribute("Role").equals("ADMIN")) {
             return "error";
         }
 
@@ -201,7 +227,7 @@ public class ItemController {
         form.setTitle(review.getTitle());
         form.setMemo(review.getMemo());
 
-        model.addAttribute("form",form);
+        model.addAttribute("form", form);
 
         return "review/createReview";
     }
@@ -209,6 +235,9 @@ public class ItemController {
     // 리뷰 수정
     @PostMapping("/update/review/{reviewId}")
     public String updateReview(@PathVariable("reviewId") Long reviewId, @ModelAttribute("form") ReviewForm form, Model model, HttpSession session) {
+        if(memberService.getLoginMember(session) == null) {
+            return "others/needLogin";
+        }
 
         Review review = reviewService.findOne(reviewId);
 
@@ -219,7 +248,6 @@ public class ItemController {
 
         return "redirect:/shop/{itemId}";
     }
-
 
 
     // 리뷰 상세 페이지
@@ -244,7 +272,7 @@ public class ItemController {
             Member member = memberService.getLoginMember(session);
             model.addAttribute("memberId", member.getId());
             model.addAttribute("memberRole", member.getRole());
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -271,7 +299,7 @@ public class ItemController {
         comment.setNum(1L);
         System.out.println("parentId : " + parentId);
 
-        if(parentId != 0) {
+        if (parentId != 0) {
             comment.setParent(form.getParentId());
             comment.setSequence(commentService.findOne(form.getParentId()).getDate());
             comment.setNum(commentService.getSequenceCount(commentService.findOne(form.getParentId()).getDate()) + 1);
@@ -284,7 +312,10 @@ public class ItemController {
 
     // 댓글 수정
     @PostMapping("/update/comment/{commentId}")
-    public String deleteComment(@PathVariable("commentId") Long commentId, @ModelAttribute("form") CommentForm form) {
+    public String deleteComment(@PathVariable("commentId") Long commentId, @ModelAttribute("form") CommentForm form, HttpSession session) {
+        if(memberService.getLoginMember(session) == null) {
+            return "others/needLogin";
+        }
         Comment comment = commentService.findOne(commentId);
         comment.setMemo(form.getMemo() + " [수정 : " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd, HH:mm")) + "]");
 
@@ -295,7 +326,10 @@ public class ItemController {
 
     // 댓글 삭제
     @GetMapping("/delete/comment/{commentId}")
-    public String deleteComment(@PathVariable("commentId") Long commentId) {
+    public String deleteComment(@PathVariable("commentId") Long commentId, HttpSession session) {
+        if(memberService.getLoginMember(session) == null) {
+            return "others/needLogin";
+        }
         Review review = commentService.deleteComment(commentId);
 
         return "redirect:/back";

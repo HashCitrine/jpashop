@@ -82,4 +82,29 @@ public class ItemService {
         return itemRepository.findAllOrderBySale();
     }
 
-}
+    public List<Item> findBySort(String sort) {
+        String[] sortList = {"home", "sale", "review", "book", "album", "movie"};
+        int select = 1;
+
+        for (String list : sortList) {
+            if(list.equals(sort)){
+                switch (select){
+                    case 1 :
+                        return findItems();
+                    case 2:
+                        return orderByReview();
+                    case 3:
+                        return orderBySaleCount();
+                    default:
+                        return itemRepository.findByCategory(select);
+                }
+            }
+            select++;
+        }
+
+        return null;
+        }
+
+
+    }
+

@@ -60,4 +60,18 @@ public class ItemRepository {
                 .getResultList();
     }
 
+    public List<Item> findByCategory(int select) {
+        switch (select) {
+            case 4:
+                return em.createQuery("select b from Book b", Item.class)
+                        .getResultList();
+            case 5:
+                return em.createQuery("select a from Album a", Item.class)
+                        .getResultList();
+            case 6:
+                return em.createQuery("select m from Movie m", Item.class)
+                        .getResultList();
+        }
+        return null;
+    }
 }

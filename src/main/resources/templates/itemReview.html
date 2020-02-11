@@ -36,15 +36,15 @@
 
   <th:block th:replace="fragments/shopSidebar :: shopSidebar" />
   <!-- /.col-lg-3 -->
-
-      <div class="col-lg-9">
+  <div style="padding-top: 50px" > </div>
+  <div class="col-lg-9">
 
         <!-- /.card -->
         <div class="card card-outline-secondary my-4">
           <div class="card-header">
             <div>
               상품 후기
-              <span style="float: right"><a th:text="'(총 ' + ${reviewCount} + '개)'"></a></span>
+              <span><a th:text="'(총 ' + ${reviewCount} + '개)'"></a></span>
             </div>
           </div>
           <div th:if="${reviews.size()} == 0" class="card-body">

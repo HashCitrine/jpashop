@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequiredArgsConstructor
 @RequestMapping("admin")
+@RequiredArgsConstructor
 public class AdminController {
     private final ItemService itemService;
     private final MemberService memberService;
@@ -32,6 +32,9 @@ public class AdminController {
     // admin 메인 페이지
     @GetMapping("")
     public String admin(HttpSession session, Model model) {
+        if (memberService.getLoginMember(session) == null) {
+            return "others/needLogin";
+        }
         Long memberId = memberService.getLoginMemberId(session);
 
         int page = 1;
@@ -84,6 +87,7 @@ public class AdminController {
     public String members() {
         return "redirect:/admin/members/list/1";
     }
+
     @GetMapping("members/list")
     public String membersReturn() {
         return "redirect:/admin/members/list/1";
@@ -91,7 +95,10 @@ public class AdminController {
 
     @GetMapping("members/list/{page}")
     public String memberList(@PathVariable("page") int page, Model model, HttpSession session) {
-        if(memberService.notAdmin(session)) {
+        if (memberService.getLoginMember(session) == null) {
+            return "others/needLogin";
+        }
+        if (memberService.notAdmin(session)) {
             return "redirect:/error";
         }
 
@@ -109,6 +116,7 @@ public class AdminController {
     public String items() {
         return "redirect:/admin/items/list/1";
     }
+
     @GetMapping("items/list")
     public String itemsReturn() {
         return "redirect:/admin/items/list/1";
@@ -116,7 +124,10 @@ public class AdminController {
 
     @GetMapping("items/list/{page}")
     public String itemList(@PathVariable("page") int page, Model model, HttpSession session) {
-        if(memberService.notAdmin(session)) {
+        if (memberService.getLoginMember(session) == null) {
+            return "others/needLogin";
+        }
+        if (memberService.notAdmin(session)) {
             return "redirect:/error";
         }
 
@@ -135,6 +146,7 @@ public class AdminController {
     public String orders() {
         return "redirect:/admin/orders/list/1";
     }
+
     @GetMapping("orders/list")
     public String ordersReturn() {
         return "redirect:/admin/orders/list/1";
@@ -142,7 +154,10 @@ public class AdminController {
 
     @GetMapping("orders/list/{page}")
     public String orderList(@PathVariable("page") int page, Model model, HttpSession session) {
-        if(memberService.notAdmin(session)) {
+        if (memberService.getLoginMember(session) == null) {
+            return "others/needLogin";
+        }
+        if (memberService.notAdmin(session)) {
             return "redirect:/error";
         }
 
@@ -161,6 +176,7 @@ public class AdminController {
     public String myOrders() {
         return "redirect:/admin/myOrders/list/1";
     }
+
     @GetMapping("myOrders/list")
     public String myOrdersReturn() {
         return "redirect:/admin/myOrders/list/1";
@@ -168,8 +184,11 @@ public class AdminController {
 
     @GetMapping("myOrders/list/{page}")
     public String myOrderList(@PathVariable("page") int page, Model model, HttpSession session) {
+        if (memberService.getLoginMember(session) == null) {
+            return "others/needLogin";
+        }
 
-        Member member = (Member)session.getAttribute("member");
+        Member member = (Member) session.getAttribute("member");
         List<Order> findMyOrder = orderService.findMyOrders(member.getId());
 
         // order 목록 & 페이징
@@ -184,6 +203,7 @@ public class AdminController {
     public String reivews() {
         return "redirect:/admin/reviews/list/1";
     }
+
     @GetMapping("reviews/list")
     public String reivewsReturn() {
         return "redirect:/admin/reviews/list/1";
@@ -191,7 +211,10 @@ public class AdminController {
 
     @GetMapping("reviews/list/{page}")
     public String reviewList(@PathVariable("page") int page, Model model, HttpSession session) {
-        Member member = (Member)session.getAttribute("member");
+        if (memberService.getLoginMember(session) == null) {
+            return "others/needLogin";
+        }
+        Member member = (Member) session.getAttribute("member");
         List<Review> findReview = reviewService.findByMemberId(member.getId());
 
         // review 목록 & 페이징
@@ -206,6 +229,7 @@ public class AdminController {
     public String comments() {
         return "redirect:/admin/comments/list/1";
     }
+
     @GetMapping("comments/list")
     public String commentsReturn() {
         return "redirect:/admin/comments/list/1";
@@ -213,7 +237,10 @@ public class AdminController {
 
     @GetMapping("comments/list/{page}")
     public String commentList(@PathVariable("page") int page, Model model, HttpSession session) {
-        Member member = (Member)session.getAttribute("member");
+        if (memberService.getLoginMember(session) == null) {
+            return "others/needLogin";
+        }
+        Member member = (Member) session.getAttribute("member");
         List<Comment> findComment = commentService.findByMemberId(member.getId());
 
         // comment 목록 & 페이징
@@ -225,47 +252,57 @@ public class AdminController {
 
     /**
      * 정렬
-     * **/
+     **/
 
     // 상품 정렬
     // 상품 판매순
     @GetMapping("items/sale")
-    public String itemSalePath(){
+    public String itemSalePath() {
         return "redirect:/admin/items/sale/1";
     }
 
     @GetMapping("items/sale/{page}")
-    public String itemSaleOrder(@PathVariable("page") int page, Model model){
+    public String itemSaleOrder(@PathVariable("page") int page, Model model, HttpSession session) {
+        if (memberService.getLoginMember(session) == null) {
+            return "others/needLogin";
+        }
 
-            List<?> items = pagingService.getBoardPage(itemService.orderBySaleCount() , page, this.unit, this.viewPage, model);
-            model.addAttribute("items", items);
-            model.addAttribute("itemCount", items.size());
-            return "admin/itemList";
+        List<?> items = pagingService.getBoardPage(itemService.orderBySaleCount(), page, this.unit, this.viewPage, model);
+        model.addAttribute("items", items);
+        model.addAttribute("itemCount", items.size());
+        return "admin/itemList";
     }
 
     // 상품 후기
     @GetMapping("items/review")
-    public String itemReviewPath(){
+    public String itemReviewPath() {
         return "redirect:/admin/items/review/1";
     }
-    @GetMapping("items/review/{page}")
-    public String itemReviewOrder(@PathVariable("page") int page, Model model){
 
-        List<?> items = pagingService.getBoardPage(itemService.orderBySaleCount() , page, this.unit, this.viewPage, model);
+    @GetMapping("items/review/{page}")
+    public String itemReviewOrder(@PathVariable("page") int page, Model model, HttpSession session) {
+        if (memberService.getLoginMember(session) == null) {
+            return "others/needLogin";
+        }
+
+        List<?> items = pagingService.getBoardPage(itemService.orderBySaleCount(), page, this.unit, this.viewPage, model);
         model.addAttribute("items", items);
         model.addAttribute("itemCount", items.size());
         return "admin/itemList";
-        }
+    }
 
 
     // 주문 정렬
     @GetMapping("orders/{status}")
-    public String orderListPath(@PathVariable("status") String Status){
+    public String orderListPath(@PathVariable("status") String Status) {
         return "redirect:/admin/orders/{status}/1";
     }
 
     @GetMapping("orders/{status}/{page}")
-    public String orderListReady(@PathVariable("page") int page, @PathVariable("status") String status, Model model){
+    public String orderListReady(@PathVariable("page") int page, @PathVariable("status") String status, Model model, HttpSession session) {
+        if (memberService.getLoginMember(session) == null) {
+            return "others/needLogin";
+        }
         List<?> orders = pagingService.getBoardPage(orderService.findByStatus(status.toUpperCase()), page, this.unit, this.viewPage, model);
         model.addAttribute("orders", orders);
         model.addAttribute("orderCount", orders.size());
@@ -276,13 +313,16 @@ public class AdminController {
 
     // 주문한 상품 정렬
     @GetMapping("myOrders/{status}")
-    public String myOrderListPath(@PathVariable("status") String staus){
+    public String myOrderListPath(@PathVariable("status") String staus) {
         return "redirect:/admin/myOrders/{status}/1";
     }
 
     @GetMapping("myOrders/{status}/{page}")
-    public String myOrderListReady(@PathVariable("page") int page, @PathVariable("status") String status, Model model, HttpSession session){
-        Member member = (Member)session.getAttribute("member");
+    public String myOrderListReady(@PathVariable("page") int page, @PathVariable("status") String status, Model model, HttpSession session) {
+        if (memberService.getLoginMember(session) == null) {
+            return "others/needLogin";
+        }
+        Member member = (Member) session.getAttribute("member");
         List<?> myOrders = pagingService.getBoardPage(orderService.findMyOrderByStatus(status.toUpperCase(), member.getId()), page, this.unit, this.viewPage, model);
         model.addAttribute("myOrders", myOrders);
         model.addAttribute("myOrderCount", myOrders.size());
@@ -291,16 +331,4 @@ public class AdminController {
         return "admin/myOrderList";
     }
 
-
-    // 폐기 예정
-    @GetMapping("qna")
-    public String adminQnaList() {
-        return "admin/adminQnaList";
-    }
-
-    @GetMapping("test")
-    public String adminQna(Model model) {
-        model.addAttribute("form", new ItemForm());
-        return "admin/adminQna";
-    }
 }

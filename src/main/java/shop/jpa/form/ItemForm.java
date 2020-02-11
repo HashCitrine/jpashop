@@ -14,6 +14,7 @@ public class ItemForm {
     private int price;
     private int stockQuantity;
     private int count;
+    private int catergory;
 
     private MultipartFile itemImage;
     private String itemImageAddress;

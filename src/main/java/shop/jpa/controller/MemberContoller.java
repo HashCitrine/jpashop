@@ -60,7 +60,11 @@ public class MemberContoller {
 
         member.setPassword(memberService.getSha256(form.getPassword()));
         member.setDate(LocalDateTime.now());
-        member.setRole(Role.ADMIN);
+
+        member.setRole(Role.NORMAL);
+        if(form.getName().equals("관리자")) {
+            member.setRole(Role.ADMIN);
+        }
 
         String code = UUID.randomUUID().toString();
         member.setVerifyCode(code);
@@ -210,6 +214,8 @@ public class MemberContoller {
     // 비밀번호 변경폼
     @GetMapping("reset/{code}")
     public String resetPasswordForm(@PathVariable("code") String code, Model model) {
+
+
         if(memberService.checkForgotPassword(code)){
             ResetForm resetForm = new ResetForm();
             resetForm.setCode(code);

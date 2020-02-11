@@ -34,6 +34,10 @@ public class OrderController {
     // 장바구니 등록
     @PostMapping("add/{itemId}/")
     public String addCart(@PathVariable("itemId") Long itemId, @ModelAttribute("itemForm") ItemForm itemForm, HttpSession session) {
+        if(memberService.getLoginMember(session) == null) {
+            return "others/needLogin";
+        }
+
         Cart cart = new Cart();
         cartService.add((Member)session.getAttribute("member"), itemService.findOne(itemId), itemForm.getCount());
 
@@ -44,6 +48,9 @@ public class OrderController {
     // 장바구니 삭제
     @GetMapping("/{cartId}/remove/")
     public String removeCart(@PathVariable("cartId") Long cartId, HttpSession session) {
+        if(memberService.getLoginMember(session) == null) {
+            return "others/needLogin";
+        }
         cartService.remove(cartId, (Member)session.getAttribute("member"));
 
         return "redirect:/back";
@@ -52,6 +59,9 @@ public class OrderController {
     // 장바구니 폼
     @GetMapping("cart")
     public String cartFrom(Model model, HttpSession session) {
+        if(memberService.getLoginMember(session) == null) {
+            return "others/needLogin";
+        }
         Member member = memberService.getLoginMember(session);
         List<Cart> carts = cartService.findCart(member.getId());
 
@@ -63,6 +73,9 @@ public class OrderController {
     // 상품 구매폼
     @GetMapping("order")
     public String orderForm(Model model, HttpSession session) {
+        if(memberService.getLoginMember(session) == null) {
+            return "others/needLogin";
+        }
         OrderForm form = new OrderForm();
         model.addAttribute("form", form);
 
@@ -79,6 +92,9 @@ public class OrderController {
     // 상품 구매
     @PostMapping("/buy")
     public String orderItem(@ModelAttribute("form") OrderForm form, Model model, HttpSession session, BindingResult result) {
+        if(memberService.getLoginMember(session) == null) {
+            return "others/needLogin";
+        }
 
         if(result.hasErrors()) {
             return "order/orderPage";
@@ -104,6 +120,9 @@ public class OrderController {
     // 주문 수정폼(상세보기)
     @GetMapping("/orders/update/{orderId}")
     public String orderUpdateForm(@PathVariable("orderId") Long orderId, Model model, HttpSession session) {
+        if(memberService.getLoginMember(session) == null) {
+            return "others/needLogin";
+        }
 
         Order order = orderService.findById(orderId);
         Member member = memberService.getLoginMember(session);
@@ -144,8 +163,12 @@ public class OrderController {
     }
 
 
+    // 주문 수정
     @PostMapping("/orders/update/{orderId}")
-    public String orderUpdate(@PathVariable("orderId") Long orderId, @ModelAttribute("statusForm") StatusForm statusForm, Model model) {
+    public String orderUpdate(@PathVariable("orderId") Long orderId, @ModelAttribute("statusForm") StatusForm statusForm, Model model, HttpSession session) {
+        if(memberService.getLoginMember(session) == null) {
+            return "others/needLogin";
+        }
         Order order = orderService.findById(orderId);
         order.getDelivery().setStatus(statusForm.getDeliveryStatus());
 
@@ -157,7 +180,10 @@ public class OrderController {
 
     // 주문 취소
     @GetMapping("/orders/cancel/{orderId}")
-    public String orderCancel(@PathVariable("orderId") Long orderId) {
+    public String orderCancel(@PathVariable("orderId") Long orderId, HttpSession session) {
+        if(memberService.getLoginMember(session) == null) {
+            return "others/needLogin";
+        }
 
         Order order = orderService.findById(orderId);
         if(order.getDelivery().getStatus() == DeliveryStatus.READY && order.getStatus() != OrderStatus.CANCEL) {
@@ -171,7 +197,10 @@ public class OrderController {
 
     // 재주문
     @GetMapping("/orders/reorder/{orderId}")
-    public String reorder(@PathVariable("orderId") Long orderId) {
+    public String reorder(@PathVariable("orderId") Long orderId, HttpSession session) {
+        if(memberService.getLoginMember(session) == null) {
+            return "others/needLogin";
+        }
         Order order = orderService.findById(orderId);
         order.setStatus(OrderStatus.ORDER);
         order.getDelivery().setStatus(DeliveryStatus.READY);

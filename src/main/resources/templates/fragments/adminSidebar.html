@@ -2,10 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <ul class="sidebar navbar-nav" th:fragment="adminSidebar">
     <li class="nav-item active">
-        <a class="nav-link" th:href="@{/admin}">
+        <a class="nav-link" th:href="@{/static/admin}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>카테고리</span>
         </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" th:href="@{/}">
+            <i class="fas fa-fw fa-table"></i>
+            <span>홈</span></a>
     </li>
 
     <li class="nav-item">
@@ -23,7 +29,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/members/list}">
+            <a class="nav-link" th:href="@{/members/list/1}">
                 <i class="fas fa-fw fa-table"></i>
                 <span>회원목록</span></a>
         </li>
@@ -36,9 +42,9 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="itemsDropdown">
                 <h6 class="dropdown-header">정렬 방법:</h6>
-                <a class="dropdown-item" th:href="@{/admin/items/list}">최신순</a>
-                <a class="dropdown-item" th:href="@{/admin/items/sale}">주문순</a>
-                <a class="dropdown-item" th:href="@{/admin/items/review}">후기순</a>
+                <a class="dropdown-item" th:href="@{/static/admin/items/list}">최신순</a>
+                <a class="dropdown-item" th:href="@{/static/admin/items/sale}">주문순</a>
+                <a class="dropdown-item" th:href="@{/static/admin/items/review}">후기순</a>
             </div>
         </li>
 
@@ -50,11 +56,11 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="orderDropdown">
                 <h6 class="dropdown-header">정렬 방법:</h6>
-                <a class="dropdown-item" th:href="@{/admin/orders/list}">전체</a>
-                <a class="dropdown-item" th:href="@{/admin/orders/ready}">준비중</a>
-                <a class="dropdown-item" th:href="@{/admin/orders/delivery}">배송중</a>
-                <a class="dropdown-item" th:href="@{/admin/orders/cancel}">취소</a>
-                <a class="dropdown-item" th:href="@{/admin/orders/complete}">배송완료</a>
+                <a class="dropdown-item" th:href="@{/static/admin/orders/list}">전체</a>
+                <a class="dropdown-item" th:href="@{/static/admin/orders/ready}">준비중</a>
+                <a class="dropdown-item" th:href="@{/static/admin/orders/delivery}">배송중</a>
+                <a class="dropdown-item" th:href="@{/static/admin/orders/cancel}">취소</a>
+                <a class="dropdown-item" th:href="@{/static/admin/orders/complete}">배송완료</a>
             </div>
         </li>
 
@@ -70,11 +76,11 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="myOrderDropdown">
                 <h6 class="dropdown-header">정렬 방법:</h6>
-                <a class="dropdown-item" th:href="@{/admin/myOrders/list}">전체</a>
-                <a class="dropdown-item" th:href="@{/admin/myOrders/ready}">준비중</a>
-                <a class="dropdown-item" th:href="@{/admin/myOrders/delivery}">배송중</a>
-                <a class="dropdown-item" th:href="@{/admin/myOrders/cancel}">취소</a>
-                <a class="dropdown-item" th:href="@{/admin/myOrders/complete}">배송완료</a>
+                <a class="dropdown-item" th:href="@{/static/admin/myOrders/list}">전체</a>
+                <a class="dropdown-item" th:href="@{/static/admin/myOrders/ready}">준비중</a>
+                <a class="dropdown-item" th:href="@{/static/admin/myOrders/delivery}">배송중</a>
+                <a class="dropdown-item" th:href="@{/static/admin/myOrders/cancel}">취소</a>
+                <a class="dropdown-item" th:href="@{/static/admin/myOrders/complete}">배송완료</a>
             </div>
         </li>
 
@@ -86,8 +92,8 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="boardDropdown">
                 <h6 class="dropdown-header">정렬 방법:</h6>
-                <a class="dropdown-item" th:href="@{/admin/reviews/list}">후기</a>
-                <a class="dropdown-item" th:href="@{/admin/comments/list}">댓글</a>
+                <a class="dropdown-item" th:href="@{/static/admin/reviews/list}">후기</a>
+                <a class="dropdown-item" th:href="@{/static/admin/comments/list}">댓글</a>
             </div>
         </li>
 

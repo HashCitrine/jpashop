@@ -52,6 +52,7 @@
     <th:block th:replace="fragments/shopSidebar :: shopSidebar"/>
     <!-- /.col-lg-3 -->
 
+    <div style="padding-top: 50px" > </div>
     <div class="col-lg-9">
 
         <form th:action="@{/add/{itemId}/(itemId=${itemForm.id})}" name="orderItem" method="post">
@@ -89,8 +90,9 @@
         <div class="card card-outline-secondary my-4">
             <div class="card-header">
                 <div class="row">
-                    <div class="col-lg-3">상품 후기
-                        <span style="float: right"><a th:text="'(총 ' + ${reviewCount} + '개)'"></a></span>
+                    <div class="col-lg-3">
+                        <span>상품 후기</span>
+                        <span style="float: left"><a th:text="'(총 ' + ${reviewCount} + '개)'"></a></span>
                         </div>
                     <div class="col-lg-9" align="right"><a th:href="@{/{id}/reviews/1(id=${itemForm.id})}"
                                                            class="btn btn-success">더보기</a></div>
