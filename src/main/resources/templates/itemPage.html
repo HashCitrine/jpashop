@@ -16,7 +16,7 @@
 
     <script language="JavaScript">
         function addCart(stock, count) {
-            if(count == 0) {
+            if (count == 0) {
                 alert("1개 이상 주문하실 수 있습니다.");
                 location.reload();
             }
@@ -26,6 +26,7 @@
             } else if (confirm("장바구니에 해당 상품을 담으시겠습니까?")) {
                 document.orderItem.submit();
             }
+        }
 
     </script>
 
@@ -92,7 +93,7 @@
                 <div class="row">
                     <div class="col-lg-3">
                         <span>상품 후기</span>
-                        <span style="float: left"><a th:text="'(총 ' + ${reviewCount} + '개)'"></a></span>
+                        <span><a th:text="'(총 ' + ${reviewCount} + '개)'"></a></span>
                         </div>
                     <div class="col-lg-9" align="right"><a th:href="@{/{id}/reviews/1(id=${itemForm.id})}"
                                                            class="btn btn-success">더보기</a></div>

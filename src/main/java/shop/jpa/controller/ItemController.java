@@ -35,6 +35,9 @@ public class ItemController {
 
     @GetMapping(value = "new")
     public String createItemForm(Model model, HttpSession session) {
+        if(memberService.getRole(session) != Role.ADMIN) {
+            return "others/needLogin";
+        }
         model.addAttribute("form", new ItemForm());
         return "item/createItem";
     }
@@ -43,6 +46,9 @@ public class ItemController {
     // 상품 등록
     @PostMapping(value = "/new")
     public String createItem(@Valid @ModelAttribute("form") ItemForm form, Model model, HttpSession session) throws Exception {
+        if(memberService.getRole(session) != Role.ADMIN) {
+            return "others/needAdmin";
+        }
         Item item = new Item();
 
         System.out.println(form.getCatergory());
@@ -108,7 +114,7 @@ public class ItemController {
         if(memberService.getRole(session) != Role.ADMIN) {
             return "others/needAdmin";
         }
-        Book updateItem = (Book) itemService.findOne(itemId);
+        Item updateItem = itemService.findOne(itemId);
 
         ItemForm form = new ItemForm();
         form.setId(updateItem.getId());

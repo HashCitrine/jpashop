@@ -7,7 +7,7 @@
     if(confirm("장바구니에 상품이 추가되었습니다. 장바구니로 바로 가시겠습니까?")){
         window.location.href= "/cart";
     } else {
-        window.location=document.referrer;
+        history.back();
     }
 </script>
 

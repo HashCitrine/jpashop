@@ -100,13 +100,6 @@ public class OrderController {
             return "order/orderPage";
         }
 
-        Item item = itemService.findOne(form.getItem().getId());
-        if(item.getStockQuantity() - form.getCount() < 0) {
-            FieldError error = new FieldError("form", "orderPrice", "재고량이 부족합니다. 남은 수량을 확인해주세요.");
-            result.addError(error);
-            return "order/orderPage";
-        }
-
         Address address = new Address(form.getMainAddress() + form.getExtraAddress(), form.getPostcode());
 
         Member member = memberService.getLoginMember(session);

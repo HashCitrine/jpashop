@@ -7,9 +7,10 @@
 <body>
 <script>
     if(confirm("로그인이 필요합니다. 로그인 하시겠습니까?")){
-        window.location.href="https://wwww.springboot-jpashop.page/login";
+        window.location.href= "/login";
+    } else {
+       history.back();
     }
-    window.location=document.referrer;
 </script>
 </body>
 </html>
