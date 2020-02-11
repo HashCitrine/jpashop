@@ -47,6 +47,8 @@ public class ItemService {
         return itemRepository.findOne(itemId);
     }
 
+
+    // 외부 환경에 따라 수정해야 할 필요 있음
     public String uploadFile(MultipartFile file) throws IOException {
         if(file.getSize() == 0) {
             return null;

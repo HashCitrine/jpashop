@@ -48,7 +48,7 @@ public class ItemController {
 
         item.setDate(LocalDateTime.now());
 
-        item.setItemImage(itemService.uploadFile(form.getItemImage()));
+//        item.setItemImage(itemService.uploadFile(form.getItemImage()));
 
         System.out.println(item.getItemImage());
 
@@ -95,7 +95,7 @@ public class ItemController {
         form.setPrice((updateItem.getPrice()));
         form.setStockQuantity(updateItem.getStockQuantity());
         form.setMemo(updateItem.getMemo());
-        form.setItemImageAddress(updateItem.getItemImage());
+//        form.setItemImageAddress(updateItem.getItemImage());
         model.addAttribute("form", form);
 
         return "item/updateItem";
