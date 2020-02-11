@@ -30,7 +30,7 @@ public class EmailConfig {
     @Value("${mail.smtp.socketFactory.fallback}")
     private boolean fallback;
 
-    @Value("")
+    @Value("hashcitrine@springboot-jpashop.page")
     private String email;
     @Value("")
     private String password;
@@ -39,7 +39,7 @@ public class EmailConfig {
     public JavaMailSender javaMailService() {
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
         javaMailSender.setHost("smtp.gmail.com");
-        javaMailSender.setUsername(email);
+        javaMailSender.setUsername("hashcitrine@springboot-jpashop.page");
         javaMailSender.setPassword(password);
         javaMailSender.setPort(port);
         pt.put("mail.smtp.socketFactory.port", socketPort);

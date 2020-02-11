@@ -204,10 +204,10 @@ public class MemberService {
         try {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, true, "UTF-8");
 
-            String url = "http://localhost:8080/verify/" + code;
+            String url = "https://springboot-jpashop.page/verify/" + code;
             String html = "<a href=" + url + ">이메일 인증하기</a>";
 
-            mimeMessageHelper.setFrom("using1524@naver.com");
+            mimeMessageHelper.setFrom("hashcitrine@springboot-jpashop.page");
             mimeMessageHelper.setTo(email);
             mimeMessageHelper.setSubject("SB Shop 회원가입 인증 메일입니다.");
             mimeMessageHelper.setText(html, true);
@@ -227,7 +227,7 @@ public class MemberService {
         try {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, true, "UTF-8");
 
-            String url = "http://localhost:8080/reset/" + code;
+            String url = "https://springboot-jpashop.page/reset/" + code;
             String html = "<a href=" + url + ">비밀번호 변경 하기</a>";
 
             mimeMessageHelper.setFrom("using1524@naver.com");
