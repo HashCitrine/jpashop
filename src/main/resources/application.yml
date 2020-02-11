@@ -1,7 +1,6 @@
 spring:
   profiles:
     active: local # 기본 환경 선택
-    include: db
   servlet:
     multipart:
       file-size-threshold: 0
@@ -25,22 +24,9 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create-drop
+
+---
+
 #  h2:
 #    console:
 #      enabled: true
-
-# 운영 환경
----
-spring.profiles: set1
-spring.profiles.include: db
-
-server:
-  port: 8081
-
----
-spring.profiles: set2
-spring.profiles.include: db
-
-server:
-  port: 8082
-

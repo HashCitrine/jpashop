@@ -19,14 +19,4 @@ public class ImgConfig implements WebMvcConfigurer {
 
     @Value("${uploadPath}")
     private String uploadPath;
-
-    /*
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/img/**")
-                .addResourceLocations("file://" + uploadPath);
-
-    }
-     */
-
 }

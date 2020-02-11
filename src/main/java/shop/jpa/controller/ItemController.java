@@ -9,6 +9,7 @@ import shop.jpa.domain.Comment;
 import shop.jpa.domain.Member;
 import shop.jpa.domain.Review;
 import shop.jpa.domain.item.Book;
+import shop.jpa.domain.item.Item;
 import shop.jpa.form.CommentForm;
 import shop.jpa.form.ItemForm;
 import shop.jpa.form.ReviewForm;
@@ -39,32 +40,21 @@ public class ItemController {
     // 상품 등록
     @PostMapping(value="/new")
     public String createItem(@Valid @ModelAttribute("form") ItemForm form, Model model, HttpSession session) throws Exception {
-        Book book = new Book();
-        System.out.println(book.getItemImage());
+        Item item = new Item();
+        item.setName(form.getName());
+        item.setPrice(form.getPrice());
+        item.setStockQuantity(form.getStockQuantity());
+        item.setMemo(form.getMemo());
 
-        book.setName(form.getName());
-        book.setPrice(form.getPrice());
-        book.setStockQuantity(form.getStockQuantity());
-        book.setMemo(form.getMemo());
+        item.setDate(LocalDateTime.now());
 
-        book.setDate(LocalDateTime.now());
+        item.setItemImage(itemService.uploadFile(form.getItemImage()));
 
-        book.setItemImage(itemService.uploadFile(form.getItemImage()));
+        System.out.println(item.getItemImage());
 
-        System.out.println(book.getItemImage());
-
-        itemService.saveItem(book);
+        itemService.saveItem(item);
         return "redirect:/";
     }
-
-    /*
-    @GetMapping("/items")
-    public String list(Model model) {
-        List<Item> items = itemService.findItems();
-        model.addAttribute("items", items);
-        return "items/itemList";
-    }
-*/
 
 
     // 아이템 단독창

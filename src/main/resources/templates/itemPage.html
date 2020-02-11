@@ -56,7 +56,7 @@
 
         <form th:action="@{/add/{itemId}/(itemId=${itemForm.id})}" name="orderItem" method="post">
             <div th:object="${itemForm}" class="card mt-4">
-                <img class="card-img-top img-fluid" th:src="@{${itemForm.itemImageAddress}}" alt="">
+        <!--        <img class="card-img-top img-fluid" th:src="@{${itemForm.itemImageAddress}}" alt=""> -->
                 <div class="card-body">
                     <h3 class="card-title" th:text="*{name}">Product Name</h3>
                     <h4 th:text="*{price} + '원'">$24.99</h4>
