@@ -291,6 +291,10 @@ public class ItemController {
     @PostMapping("/{itemId}/review/{reviewId}/{parentId}")
     public String createComment(@PathVariable("itemId") Long id, @PathVariable("reviewId") Long reviewId, @PathVariable("parentId") Long parentId,
                                 @ModelAttribute("form") CommentForm form, Model model, HttpSession session) {
+        if(memberService.getLoginMember(session) == null) {
+            return "others/needLogin";
+        }
+
         Long memberId = memberService.getLoginMemberId(session);
 
         Comment comment = new Comment();

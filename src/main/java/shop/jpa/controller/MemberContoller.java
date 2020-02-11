@@ -241,7 +241,7 @@ public class MemberContoller {
             return "user/resetPassword";
         }
 
-        memberService.resetPassword(code, resetForm.getPassword());
+        memberService.resetPassword(code, memberService.getSha256(resetForm.getPassword()));
 
         return "user/updatePassword";
     }
@@ -326,12 +326,8 @@ public class MemberContoller {
         if (sessionRole == Role.ADMIN) {
             member.setRole(form.getRole());
 
-            if (!form.getPassword().isEmpty()) {
-                member.setPassword(form.getPassword());
-            }
-
-        } else {
-            member.setPassword(form.getPassword());
+        } if (!form.getPassword().equals("")) {
+            member.setPassword(memberService.getSha256(form.getPassword()));
         }
 
         memberService.update(member, session);

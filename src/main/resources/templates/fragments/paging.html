@@ -3,15 +3,15 @@
 <th:block th:fragment="itemPaging">
     <div th:if="${end} > 1" align="center">
                     <span th:if="${page} != 1">
-                    <a th:href="@{/static/admin/items/{sort}/{resetPage}(sort=${sort}, resetPage=${resetPage})}"><<</a>&nbsp;
-                    <a th:href="@{/static/admin/items/{sort}/{previous}(sort=${sort}, previous=${previous})}"><</a>&nbsp;
+                    <a th:href="@{/admin/items/{sort}/{resetPage}(sort=${sort}, resetPage=${resetPage})}"><<</a>&nbsp;
+                    <a th:href="@{/admin/items/{sort}/{previous}(sort=${sort}, previous=${previous})}"><</a>&nbsp;
                     </span>
         <th:block th:each="num : ${#numbers.sequence(start, end)}">
-            <a th:text="' ' + ${num} + ' '" th:href="@{/static/admin/items/{sort}/{page} (sort=${sort}, page=${num})}"></a>
+            <a th:text="' ' + ${num} + ' '" th:href="@{/admin/items/{sort}/{page} (sort=${sort}, page=${num})}"></a>
         </th:block>&nbsp;
         <span th:if="${page} != ${lastPage}">
-                    <a th:href="@{/static/admin/items/{sort}/{next}(sort=${sort}, next=${next})}">></a>&nbsp;
-                    <a th:href="@{/static/admin/items/{sort}/{lastPage}(sort=${sort}, lastPage=${lastPage})}">>></a>
+                    <a th:href="@{/admin/items/{sort}/{next}(sort=${sort}, next=${next})}">></a>&nbsp;
+                    <a th:href="@{/admin/items/{sort}/{lastPage}(sort=${sort}, lastPage=${lastPage})}">>></a>
                     </span>
     </div>
 </th:block>
@@ -20,15 +20,15 @@
 <th:block th:fragment="memberPaging">
     <div th:if="${end} > 1" align="center">
                     <span th:if="${page} != 1">
-                    <a th:href="@{/static/admin/members/{sort}/{resetPage}(sort=${sort}, resetPage=${resetPage})}"><<</a>&nbsp;
-                    <a th:href="@{/static/admin/members/{sort}/{previous}(sort=${sort}, previous=${previous})}"><</a>&nbsp;
+                    <a th:href="@{/admin/members/{sort}/{resetPage}(sort=${sort}, resetPage=${resetPage})}"><<</a>&nbsp;
+                    <a th:href="@{/admin/members/{sort}/{previous}(sort=${sort}, previous=${previous})}"><</a>&nbsp;
                     </span>
         <th:block th:each="num : ${#numbers.sequence(start, end)}">
-            <a th:text="' ' + ${num} + ' '" th:href="@{/static/admin/members/{sort}/{page} (sort=${sort}, page=${num})}"></a>
+            <a th:text="' ' + ${num} + ' '" th:href="@{/admin/members/{sort}/{page} (sort=${sort}, page=${num})}"></a>
         </th:block>&nbsp;
         <span th:if="${page} != ${lastPage}">
-                    <a th:href="@{/static/admin/members/{sort}/{next}(sort=${sort}, next=${next})}">></a>&nbsp;
-                    <a th:href="@{/static/admin/members/{sort}/{lastPage}(sort=${sort}, lastPage=${lastPage})}">>></a>
+                    <a th:href="@{/admin/members/{sort}/{next}(sort=${sort}, next=${next})}">></a>&nbsp;
+                    <a th:href="@{/admin/members/{sort}/{lastPage}(sort=${sort}, lastPage=${lastPage})}">>></a>
                     </span>
     </div>
 </th:block>
@@ -37,15 +37,15 @@
 <th:block th:fragment="orderPaging">
     <div th:if="${end} > 1" align="center">
                     <span th:if="${page} != 1">
-                    <a th:href="@{/static/admin/orders/{sort}/{resetPage}(sort=${sort}, resetPage=${resetPage})}"><<</a>&nbsp;
-                    <a th:href="@{/static/admin/orders/{sort}/{previous}(sort=${sort}, previous=${previous})}">이전</a>&nbsp;
+                    <a th:href="@{/admin/orders/{sort}/{resetPage}(sort=${sort}, resetPage=${resetPage})}"><<</a>&nbsp;
+                    <a th:href="@{/admin/orders/{sort}/{previous}(sort=${sort}, previous=${previous})}">이전</a>&nbsp;
                     </span>
         <th:block th:each="num : ${#numbers.sequence(start, end)}">
-            <a th:text="' ' + ${num} + ' '" th:href="@{/static/admin/orders/{sort}/{page} (sort=${sort}, page=${num})}"></a>
+            <a th:text="' ' + ${num} + ' '" th:href="@{/admin/orders/{sort}/{page} (sort=${sort}, page=${num})}"></a>
         </th:block>&nbsp;
         <span th:if="${page} != ${lastPage}">
-                    <a th:href="@{/static/admin/orders/{sort}/{next}(sort=${sort}, next=${next})}">다음</a>&nbsp;
-                    <a th:href="@{/static/admin/orders/{sort}/{lastPage}(sort=${sort}, lastPage=${lastPage})}">>></a>
+                    <a th:href="@{/admin/orders/{sort}/{next}(sort=${sort}, next=${next})}">다음</a>&nbsp;
+                    <a th:href="@{/admin/orders/{sort}/{lastPage}(sort=${sort}, lastPage=${lastPage})}">>></a>
                     </span>
     </div>
 </th:block>
@@ -53,15 +53,15 @@
 <th:block th:fragment="myOrderPaging">
     <div th:if="${end} > 1" align="center">
                     <span th:if="${page} != 1">
-                    <a th:href="@{/static/admin/myOrders/{sort}/{resetPage}(sort=${sort}, resetPage=${resetPage})}"><<</a>&nbsp;
-                    <a th:href="@{/static/admin/myOrders/{sort}/{previous}(sort=${sort}, previous=${previous})}"><</a>&nbsp;
+                    <a th:href="@{/admin/myOrders/{sort}/{resetPage}(sort=${sort}, resetPage=${resetPage})}"><<</a>&nbsp;
+                    <a th:href="@{/admin/myOrders/{sort}/{previous}(sort=${sort}, previous=${previous})}"><</a>&nbsp;
                     </span>
         <th:block th:each="num : ${#numbers.sequence(start, end)}">
-            <a th:text="' ' + ${num} + ' '" th:href="@{/static/admin/admin/orders/{sort}/{page} (sort=${sort}, page=${num})}"></a>
+            <a th:text="' ' + ${num} + ' '" th:href="@{/admin/admin/orders/{sort}/{page} (sort=${sort}, page=${num})}"></a>
         </th:block>&nbsp;
         <span th:if="${page} != ${lastPage}">
-                    <a th:href="@{/static/admin/myOrders/{sort}/{next}(sort=${sort}, next=${next})}">></a>&nbsp;
-                    <a th:href="@{/static/admin/myOrders/{sort}/{lastPage}(sort=${sort}, lastPage=${lastPage})}">>></a>
+                    <a th:href="@{/admin/myOrders/{sort}/{next}(sort=${sort}, next=${next})}">></a>&nbsp;
+                    <a th:href="@{/admin/myOrders/{sort}/{lastPage}(sort=${sort}, lastPage=${lastPage})}">>></a>
                     </span>
     </div>
 </th:block>
@@ -70,15 +70,15 @@
 <th:block th:fragment="reviewPaging">
     <div th:if="${end} > 1" align="center">
                     <span th:if="${page} != 1">
-                    <a th:href="@{/static/admin/reviews/list/{resetPage}(resetPage=${resetPage})}"><<</a>&nbsp;
-                    <a th:href="@{/static/admin/reviews/list/{previous}(previous=${previous})}">이전</a>&nbsp;
+                    <a th:href="@{/admin/reviews/list/{resetPage}(resetPage=${resetPage})}"><<</a>&nbsp;
+                    <a th:href="@{/admin/reviews/list/{previous}(previous=${previous})}">이전</a>&nbsp;
                     </span>
         <th:block th:each="num : ${#numbers.sequence(start, end)}">
-            <a th:text="' ' + ${num} + ' '" th:href="@{/static/admin/reviews/list/{page} (page=${num})}"></a>
+            <a th:text="' ' + ${num} + ' '" th:href="@{/admin/reviews/list/{page} (page=${num})}"></a>
         </th:block>&nbsp;
         <span th:if="${page} != ${lastPage}">
-                    <a th:href="@{/static/admin/reviews/list/{next}(next=${next})}">다음</a>&nbsp;
-                    <a th:href="@{/static/admin/reviews/list/{lastPage}(lastPage=${lastPage})}">>></a>
+                    <a th:href="@{/admin/reviews/list/{next}(next=${next})}">다음</a>&nbsp;
+                    <a th:href="@{/admin/reviews/list/{lastPage}(lastPage=${lastPage})}">>></a>
                     </span>
     </div>
 </th:block>
@@ -86,15 +86,15 @@
 <th:block th:fragment="commentPaging">
     <div th:if="${end} > 1" align="center">
                     <span th:if="${page} != 1">
-                    <a th:href="@{/static/admin/comments/list/{resetPage}(resetPage=${resetPage})}"><<</a>&nbsp;
-                    <a th:href="@{/static/admin/comments/list/{previous}(previous=${previous})}">이전</a>&nbsp;
+                    <a th:href="@{/admin/comments/list/{resetPage}(resetPage=${resetPage})}"><<</a>&nbsp;
+                    <a th:href="@{/admin/comments/list/{previous}(previous=${previous})}">이전</a>&nbsp;
                     </span>
         <th:block th:each="num : ${#numbers.sequence(start, end)}">
-            <a th:text="' ' + ${num} + ' '" th:href="@{/static/admin/comments/list/{page} (page=${num})}"></a>
+            <a th:text="' ' + ${num} + ' '" th:href="@{/admin/comments/list/{page} (page=${num})}"></a>
         </th:block>&nbsp;
         <span th:if="${page} != ${lastPage}">
-                    <a th:href="@{/static/admin/comments/list/{next}(next=${next})}">다음</a>&nbsp;
-                    <a th:href="@{/static/admin/comments/list/{lastPage}(lastPage=${lastPage})}">>></a>
+                    <a th:href="@{/admin/comments/list/{next}(next=${next})}">다음</a>&nbsp;
+                    <a th:href="@{/admin/comments/list/{lastPage}(lastPage=${lastPage})}">>></a>
                     </span>
     </div>
 </th:block>
