@@ -136,6 +136,7 @@ public class AdminController {
         List<?> items = pagingService.getBoardPage(findItem, page, this.unit, this.viewPage, model);
         model.addAttribute("itemCount", findItem.size());
         model.addAttribute("items", items);
+        model.addAttribute("sort", "list");
 
         return "admin/itemList";
     }
@@ -270,6 +271,7 @@ public class AdminController {
         List<?> items = pagingService.getBoardPage(itemService.orderBySaleCount(), page, this.unit, this.viewPage, model);
         model.addAttribute("items", items);
         model.addAttribute("itemCount", items.size());
+        model.addAttribute("sort", "sale");
         return "admin/itemList";
     }
 
@@ -288,6 +290,7 @@ public class AdminController {
         List<?> items = pagingService.getBoardPage(itemService.orderBySaleCount(), page, this.unit, this.viewPage, model);
         model.addAttribute("items", items);
         model.addAttribute("itemCount", items.size());
+        model.addAttribute("sort", "revive");
         return "admin/itemList";
     }
 

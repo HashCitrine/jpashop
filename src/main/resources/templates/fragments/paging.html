@@ -4,13 +4,13 @@
     <div th:if="${end} > 1" align="center">
                     <span th:if="${page} != 1">
                     <a th:href="@{/admin/items/{sort}/{resetPage}(sort=${sort}, resetPage=${resetPage})}"><<</a>&nbsp;
-                    <a th:href="@{/admin/items/{sort}/{previous}(sort=${sort}, previous=${previous})}"><</a>&nbsp;
+                    <a th:href="@{/admin/items/{sort}/{previous}(sort=${sort}, previous=${previous})}">이전</a>&nbsp;
                     </span>
         <th:block th:each="num : ${#numbers.sequence(start, end)}">
             <a th:text="' ' + ${num} + ' '" th:href="@{/admin/items/{sort}/{page} (sort=${sort}, page=${num})}"></a>
         </th:block>&nbsp;
         <span th:if="${page} != ${lastPage}">
-                    <a th:href="@{/admin/items/{sort}/{next}(sort=${sort}, next=${next})}">></a>&nbsp;
+                    <a th:href="@{/admin/items/{sort}/{next}(sort=${sort}, next=${next})}">다음</a>&nbsp;
                     <a th:href="@{/admin/items/{sort}/{lastPage}(sort=${sort}, lastPage=${lastPage})}">>></a>
                     </span>
     </div>
@@ -21,13 +21,13 @@
     <div th:if="${end} > 1" align="center">
                     <span th:if="${page} != 1">
                     <a th:href="@{/admin/members/{sort}/{resetPage}(sort=${sort}, resetPage=${resetPage})}"><<</a>&nbsp;
-                    <a th:href="@{/admin/members/{sort}/{previous}(sort=${sort}, previous=${previous})}"><</a>&nbsp;
+                    <a th:href="@{/admin/members/{sort}/{previous}(sort=${sort}, previous=${previous})}">이전</a>&nbsp;
                     </span>
         <th:block th:each="num : ${#numbers.sequence(start, end)}">
             <a th:text="' ' + ${num} + ' '" th:href="@{/admin/members/{sort}/{page} (sort=${sort}, page=${num})}"></a>
         </th:block>&nbsp;
         <span th:if="${page} != ${lastPage}">
-                    <a th:href="@{/admin/members/{sort}/{next}(sort=${sort}, next=${next})}">></a>&nbsp;
+                    <a th:href="@{/admin/members/{sort}/{next}(sort=${sort}, next=${next})}">다음</a>&nbsp;
                     <a th:href="@{/admin/members/{sort}/{lastPage}(sort=${sort}, lastPage=${lastPage})}">>></a>
                     </span>
     </div>
@@ -54,13 +54,13 @@
     <div th:if="${end} > 1" align="center">
                     <span th:if="${page} != 1">
                     <a th:href="@{/admin/myOrders/{sort}/{resetPage}(sort=${sort}, resetPage=${resetPage})}"><<</a>&nbsp;
-                    <a th:href="@{/admin/myOrders/{sort}/{previous}(sort=${sort}, previous=${previous})}"><</a>&nbsp;
+                    <a th:href="@{/admin/myOrders/{sort}/{previous}(sort=${sort}, previous=${previous})}">이전</a>&nbsp;
                     </span>
         <th:block th:each="num : ${#numbers.sequence(start, end)}">
-            <a th:text="' ' + ${num} + ' '" th:href="@{/admin/admin/orders/{sort}/{page} (sort=${sort}, page=${num})}"></a>
+            <a th:text="' ' + ${num} + ' '" th:href="@{/admin/myOrders/{sort}/{page} (sort=${sort}, page=${num})}"></a>
         </th:block>&nbsp;
         <span th:if="${page} != ${lastPage}">
-                    <a th:href="@{/admin/myOrders/{sort}/{next}(sort=${sort}, next=${next})}">></a>&nbsp;
+                    <a th:href="@{/admin/myOrders/{sort}/{next}(sort=${sort}, next=${next})}">다음</a>&nbsp;
                     <a th:href="@{/admin/myOrders/{sort}/{lastPage}(sort=${sort}, lastPage=${lastPage})}">>></a>
                     </span>
     </div>
