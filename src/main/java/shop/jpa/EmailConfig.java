@@ -32,7 +32,7 @@ public class EmailConfig {
 
     @Value("hashcitrine@springboot-jpashop.page")
     private String email;
-    @Value("")
+    @Value("${custom.emailPassword}")
     private String password;
 
     @Bean

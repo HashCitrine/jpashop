@@ -41,8 +41,9 @@
                                     <td><input type="number" th:field="*{stockQuantity}" class="form-control"
                                                placeholder="수량을 입력하세요"></td>
                                 <tr><td th:for="itemImage" align="left" colspan="4">
-
-                         <!--           <input type="file" th:field="*{itemImage}" id="itemImage" name="itemImage" class="upload-hidden"> -->
+                                   <input type="file" th:field="*{itemImage}" id="itemImage" name="itemImage" class="upload-hidden">
+                                </td></tr>
+                                <tr><td colspan="4">
                                     <label>상품 유형</label>
                                     <select th:field="*{catergory}" name="statusSelect" class="form-control">
                                         <option value=1>책</option>

@@ -17,6 +17,14 @@ import java.util.List;
 @Getter
 public class ImgConfig implements WebMvcConfigurer {
 
-    @Value("${uploadPath}")
+    @Value("${custom.uploadPath}")
     private String uploadPath;
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/img/**")
+                .addResourceLocations("file://" + uploadPath);
+
+    }
+
 }

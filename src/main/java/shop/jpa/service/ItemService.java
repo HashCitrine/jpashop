@@ -31,12 +31,15 @@ public class ItemService {
 
     // 변경 감지
     @Transactional
-    public void updateItem(Long id, String name, int price, int stockQuantity, String memo) {
+    public void updateItem(Long id, String name, int price, int stockQuantity, String memo, String itemImage) {
         Item item = itemRepository.findOne(id);
         item.setName(name);
         item.setPrice(price);
         item.setStockQuantity(stockQuantity);
         item.setMemo(memo);
+        if(!itemImage.equals("")) {
+            item.setItemImage(itemImage);
+        }
     }
 
     public List<Item> findItems(){
@@ -59,7 +62,7 @@ public class ItemService {
         System.out.println(fileName + ", " + index);
         String fileExtension = fileName.substring(index + 1);
 
-        String savedName = UUID.randomUUID().toString()+ "." + fileExtension;
+        String savedName = UUID.randomUUID().toString() + "." + fileExtension;
 
         File target = new File(imgConfig.getUploadPath(), savedName);
         FileCopyUtils.copy(file.getBytes(), target);

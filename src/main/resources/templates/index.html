@@ -38,7 +38,7 @@
 
                 <div style="padding-top: 30px" th:each="item : ${items}" class="col-lg-4 col-md-6 mb-4">
                     <div class="card h-100">
-               <!--         <a th:href="@{/shop/{id}(id=${item.id})}"><img class="card-img-top" th:src="@{${item.itemImage}}" alt=""></a>  -->
+                        <a th:href="@{/shop/{id}(id=${item.id})}"><img class="card-img-top" th:src="@{'/img/' + ${item.itemImage}}" alt=""></a>
                         <div class="card-body">
                             <h4 class="card-title">
                                 <a th:text="${item.name}" th:href="@{/shop/{id}(id=${item.id})}"> 아이템</a>
