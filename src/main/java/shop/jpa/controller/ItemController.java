@@ -36,7 +36,7 @@ public class ItemController {
     @GetMapping(value = "new")
     public String createItemForm(Model model, HttpSession session) {
         if(memberService.getRole(session) != Role.ADMIN) {
-            return "others/needLogin";
+            return "others/needAdmin";
         }
         model.addAttribute("form", new ItemForm());
         return "item/createItem";

@@ -25,7 +25,7 @@
                         </a>
                     </li>
 
-                    <li th:if="${session.login} == true" class="nav-item">
+                    <li th:if="${session.member.role} == ${T(shop.jpa.domain.Role).valueOf('ADMIN')}" class="nav-item">
                         <a class="nav-link" th:href="@{/new}">상품 등록</a>
                     </li>
                     <li th:if="${session.login} == true" class="nav-item">
