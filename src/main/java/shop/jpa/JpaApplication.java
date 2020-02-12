@@ -16,5 +16,4 @@ public class JpaApplication {
                 .properties(APPLICATION_LOCATIONS)
                 .run(args);
     }
-
 }

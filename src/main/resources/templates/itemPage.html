@@ -3,12 +3,9 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
-    <title>Shop Item - Start Bootstrap Template</title>
+    <title>JPA Shop</title>
+
 
     <!-- Bootstrap core CSS -->
     <!-- Custom styles for this template -->
@@ -80,7 +77,7 @@
                             <button type="button" onclick="addCart(this.getAttribute('data-stock')), this.getAttribute('data-count')"
                                     class="btn btn-success" th:if="*{stockQuantity} != 0"
                                     th:data-stock="*{stockQuantity}" th:data-count="*{count}">장바구니 담기</button>
-                            <a th:if="*{stockQuantity} == 0" class="btn btn-success">매진</a>
+                            <a th:if="*{stockQuantity} == 0" class="btn btn-danger">매진</a>
                         </div>
                     </div>
                 </div>
