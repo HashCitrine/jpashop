@@ -57,16 +57,22 @@ public class ItemService {
             return null;
         }
 
+        // 확장자를 제외한 파일이름
         String fileName = file.getOriginalFilename();
         int index = fileName.lastIndexOf(".");
         System.out.println(fileName + ", " + index);
+
+        // 파일 확장자
         String fileExtension = fileName.substring(index + 1);
 
+        // 파일 이름 랜덤 설정 후 확장자 부여
         String savedName = UUID.randomUUID().toString() + "." + fileExtension;
 
+        // 지정한 경로에 복사하여 파일 저장
         File target = new File(imgConfig.getUploadPath(), savedName);
         FileCopyUtils.copy(file.getBytes(), target);
 
+        // '/img/파일명'을 db에 저장
         String path = target.getPath();
         int pathIndex = path.lastIndexOf("/img");
 
