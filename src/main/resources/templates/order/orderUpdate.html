@@ -55,10 +55,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="orderItem : ${orderItems}">
-                        <td th:text="${orderItem.item.name}"></td>
-                        <td th:text="${orderItem.count}"></td>
-                        <td th:text="${orderItem.orderPrice} + '원'"></td>
+                    <tr th:each="cart : ${carts}">
+                        <td th:text="${cart.item.name}"></td>
+                        <td th:text="${cart.count}"></td>
+                        <td th:text="${cart.unitPrice} + '원'"></td>
                     </tr>
                     </tbody>
                 </table>

@@ -29,10 +29,6 @@ public class OrderRepository {
 
     }
 
-    public void saveOrderItem(OrderItem orderItem) {
-        em.persist(orderItem);
-    }
-
     public Order findOne(Long id){
         return em.find(Order.class, id);
     }

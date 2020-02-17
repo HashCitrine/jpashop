@@ -6,7 +6,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import shop.jpa.domain.OrderItem;
 import shop.jpa.domain.item.Item;
 
 import javax.persistence.EntityManager;
@@ -49,14 +48,14 @@ public class ItemRepository {
 
     // 리뷰순 정렬
     public List<Item> findAllOrderByReview() {
-        return em.createQuery("select i from Item i left join Review r on i.id =r.item.id group by i.id Order by count(r) desc", Item.class)
+        return em.createQuery("select i from Item i left join Review r on i.id =r.item.id group by i.id Order by count(r) desc, i.date desc", Item.class)
                 .getResultList();
     }
 
 
     // 1차 방법 : orderItem join
     public List<Item> findAllOrderBySale() {
-        return em.createQuery("select i from Item i left join OrderItem oi on i.id = oi.item.id group by i.id order by sum(oi.count) DESC", Item.class)
+        return em.createQuery("select i from Item i left join Cart c on i.id = c.item.id group by i.id order by sum(c.count) DESC, i.date desc", Item.class)
                 .getResultList();
     }
 

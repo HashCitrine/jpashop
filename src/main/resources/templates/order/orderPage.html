@@ -130,18 +130,20 @@
                         <div class="form-inline">
                             <div class="form-group">
                                 <input class="form-control" type="text" th:field="*{postcode}"
-                                       id="sample4_postcode" placeholder="우편번호">
+                                       id="sample4_postcode" placeholder="우편번호"
+                                       th:class="${#fields.hasErrors('mainAddress')}? 'form-control fieldError' : 'form-control'">
                                 <div align="right"><input class="btn btn-primary" type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"></div>
                             </div>
                         </div>
                         <input class="form-control" type="text" th:field="*{mainAddress}"
-                               id="sample4_roadAddress" placeholder="도로명주소" th:class="${#fields.hasErrors('postcode')}? 'form-control fieldError' : 'form-control'">
+                               id="sample4_roadAddress" placeholder="도로명주소"
+                               th:class="${#fields.hasErrors('mainAddress')}? 'form-control fieldError' : 'form-control'">
 
                         <td colspan="4">
                             <span id="guide" style="color:#999;display:none"></span>
                             <input class="form-control" type="text" th:field="*{extraAddress}"
                                    id="sample4_detailAddress" placeholder="상세주소">
-                            <p th:if="${#fields.hasErrors('postcode')}" th:errors="*{postcode}">Incorrect data</p>
+                            <p th:if="${#fields.hasErrors('mainAddress')}" th:errors="*{mainAddress}">Incorrect date</p>
                     </div>
                 </div>
             </div>

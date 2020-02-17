@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
-import shop.jpa.domain.OrderItem;
 import shop.jpa.domain.item.Item;
 import shop.jpa.repository.ItemRepository;
 

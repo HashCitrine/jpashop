@@ -91,15 +91,26 @@ public class OrderController {
     }
 
     // 상품 구매
-    @PostMapping("/buy")
-    public String orderItem(@Valid  @ModelAttribute("form") OrderForm form, Model model, HttpSession session, BindingResult result) {
+    @PostMapping("buy")
+    public String orderItem(@Valid @ModelAttribute("form") OrderForm form, Model model, HttpSession session, BindingResult result) {
         if(memberService.getLoginMember(session) == null) {
             return "others/needLogin";
         }
 
-        if(result.hasErrors()) {
+        if (form.getMainAddress().isEmpty()) {
+            FieldError fieldError  = new FieldError("form", "mainAddress", "주소를 입력해야 합니다.");
+            result.addError(fieldError);
+
+            // 주문서에 필요한 내용을 다시 반
+            Member member = memberService.getLoginMember(session);
+            List<Cart> carts = cartService.findCart(member.getId());
+
+            model.addAttribute("carts", carts);
+            model.addAttribute("totalPrice", cartService.getTotalPrice(member.getId()));
+            model.addAttribute("date", LocalDateTime.now());
             return "order/orderPage";
         }
+
 
         Address address = new Address(form.getMainAddress() + form.getExtraAddress(), form.getPostcode());
 
@@ -129,11 +140,11 @@ public class OrderController {
             return "redirect:/";
         }
 
-        List<OrderItem> orderItems = order.getOrderItems();
+        List<Cart> carts = order.getCarts();
 
         int totalPrice = 0;
-        for (OrderItem orderItem : orderItems) {
-            totalPrice += orderItem.getOrderPrice();
+        for (Cart cart : carts) {
+            totalPrice += cart.getUnitPrice();
         }
 
         OrderForm orderForm = new OrderForm();
@@ -148,7 +159,7 @@ public class OrderController {
         StatusForm statusForm = new StatusForm();
         statusForm.setDeliveryStatus(order.getDelivery().getStatus());
 
-        model.addAttribute("orderItems", orderItems);
+        model.addAttribute("carts", carts);
         model.addAttribute("orderForm", orderForm);
         model.addAttribute("statusForm", statusForm);
         model.addAttribute("statusGroup", DeliveryStatus.values());

@@ -24,7 +24,7 @@ public class Order {
     private Member member;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderItem> orderItems = new ArrayList <>();
+    private List<Cart> carts = new ArrayList <>();
 
     /*
 
@@ -54,9 +54,9 @@ public class Order {
         member.getOrders().add(this);
     }
 
-    public void addOrderItem(OrderItem orderItem) { /* orderItem을 orderItems(List)에 추가할 때 + 해당 orderItem에 본 order도 저장(외래키) */
-        orderItems.add(orderItem);
-        orderItem.setOrder(this);
+    public void addCart(Cart cart) { /* orderItem을 orderItems(List)에 추가할 때 + 해당 orderItem에 본 order도 저장(외래키) */
+        carts.add(cart);
+        cart.setOrder(this);
     }
 
     public void setDelivery(Delivery delivery) { /* delivery를 추가할 때 + 해당 delivery에도 Order 저장(외래키) */
@@ -65,14 +65,15 @@ public class Order {
     }
 
     //==생성 메서드==//
-    public static Order createOrder(Member member, Delivery delivery, List<OrderItem> orderItems) {
+    public static Order createOrder(Member member, Delivery delivery, List<Cart> carts) {
         Order order = new Order();
 
         order.setMember(member);
         order.setDelivery(delivery);
 
-        for(OrderItem orderItem : orderItems) {
-            order.addOrderItem(orderItem);
+        for(Cart cart : carts) {
+            order.addCart(cart);
+            cart.getItem().removeStock(cart.getCount());
         }
         order.setStatus(OrderStatus.ORDER);
         order.setOrderDate(LocalDateTime.now());
@@ -88,8 +89,8 @@ public class Order {
             throw new IllegalStateException("이미 배송완료된 상품은 취소가 불가능합니다.");
         }
         this.setStatus(OrderStatus.CANCEL);
-        for(OrderItem orderItem : orderItems) {
-            orderItem.cancel();
+        for(Cart cart : carts) {
+            cart.cancel();
         }
     }
 
@@ -100,8 +101,8 @@ public class Order {
 
     public int getTotalPrice() {
         int totalPrice = 0;
-        for (OrderItem orderItem : orderItems) {
-            totalPrice += orderItem.getTotalPrice();
+        for (Cart cart : carts) {
+            totalPrice += cart.getUnitPrice();
         }
         return totalPrice;
     }

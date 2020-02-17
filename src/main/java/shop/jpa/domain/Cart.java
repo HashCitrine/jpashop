@@ -4,10 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import shop.jpa.domain.item.Item;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 import java.util.List;
 
@@ -28,18 +25,23 @@ public class Cart {
 
     private Boolean buy;
 
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name="order_id")
+    private Order order;
+
+    //==비즈니스 로직==//
+    public void cancel() {
+        getItem().addStock(count);
+    }
+
+    /**
+     * 주문상품 전체 가격 조회
+     */
+
     public int getUnitPrice(){
         return item.getPrice() * this.count;
     }
 
-    public static int getTotalPrice(List<Cart> carts, Member member) {
-        int totalPrice = 0;
-        for(Cart cart : carts) {
-            if(cart.member.getId() == member.getId()) {
-                totalPrice = cart.getUnitPrice();
-            }
-        }
-        return totalPrice;
-    }
+
 
 }

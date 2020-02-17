@@ -28,6 +28,7 @@
             <div class="form-label-group">
               <input type="text" th:field="*{name}" class="form-control" placeholder="이름"
                      th:class="${#fields.hasErrors('name')}? 'form-control fieldError' : 'form-control'">
+              <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Incorrect date</p>
               <label th:for="name">이름</label>
             </div>
           </div>

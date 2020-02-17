@@ -306,13 +306,11 @@ public class ItemController {
         comment.setMember(memberService.findOne(memberId));
         comment.setReview(reviewService.findOne(reviewId));
         comment.setParent(0L);
-        comment.setNum(1L);
         System.out.println("parentId : " + parentId);
 
         if (parentId != 0) {
             comment.setParent(form.getParentId());
             comment.setSequence(commentService.findOne(form.getParentId()).getDate());
-            comment.setNum(commentService.getSequenceCount(commentService.findOne(form.getParentId()).getDate()) + 1);
         }
 
         commentService.saveComment(comment);

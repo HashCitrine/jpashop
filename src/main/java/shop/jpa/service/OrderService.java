@@ -32,15 +32,8 @@ public class OrderService {
         delivery.setAddress(address);
         delivery.setStatus(DeliveryStatus.READY);
 
-        // 주문상품 생성
-        List<OrderItem> orderItems = new ArrayList<OrderItem>();
-
-        for(Cart cart : carts) {
-            orderItems.add(OrderItem.createOrderItem(cart.getItem(), cart.getUnitPrice(), cart.getCount()));
-        }
-
         // 주문 생성
-        Order order = Order.createOrder(memberRepository.findOne(member.getId()), delivery, orderItems);
+        Order order = Order.createOrder(memberRepository.findOne(member.getId()), delivery, carts);
 
         // 주문 저장
         orderRepository.save(order);
