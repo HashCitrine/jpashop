@@ -62,13 +62,13 @@ public class ItemRepository {
     public List<Item> findByCategory(int select) {
         switch (select) {
             case 4:
-                return em.createQuery("select b from Book b", Item.class)
+                return em.createQuery("select b from Book b order by b.date desc", Item.class)
                         .getResultList();
             case 5:
-                return em.createQuery("select a from Album a", Item.class)
+                return em.createQuery("select a from Album a order by a.date desc", Item.class)
                         .getResultList();
             case 6:
-                return em.createQuery("select m from Movie m", Item.class)
+                return em.createQuery("select m from Movie m order by m.date desc", Item.class)
                         .getResultList();
         }
         return null;
