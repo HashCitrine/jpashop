@@ -36,7 +36,7 @@ public class ItemService {
         item.setPrice(price);
         item.setStockQuantity(stockQuantity);
         item.setMemo(memo);
-        if(!itemImage.equals("")) {
+        if(!(itemImage == null)) {
             item.setItemImage(itemImage);
         }
     }
