@@ -14,6 +14,10 @@
             padding-top: 16px;
             padding-bottom: 16px;
         }
+
+         .fieldError {
+             border-color: #bd2130;
+         }
     </style>
 
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -131,11 +135,13 @@
                             </div>
                         </div>
                         <input class="form-control" type="text" th:field="*{mainAddress}"
-                               id="sample4_roadAddress" placeholder="도로명주소">
+                               id="sample4_roadAddress" placeholder="도로명주소" th:class="${#fields.hasErrors('postcode')}? 'form-control fieldError' : 'form-control'">
+
                         <td colspan="4">
                             <span id="guide" style="color:#999;display:none"></span>
                             <input class="form-control" type="text" th:field="*{extraAddress}"
                                    id="sample4_detailAddress" placeholder="상세주소">
+                            <p th:if="${#fields.hasErrors('postcode')}" th:errors="*{postcode}">Incorrect data</p>
                     </div>
                 </div>
             </div>

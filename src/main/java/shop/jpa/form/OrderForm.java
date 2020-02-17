@@ -20,8 +20,9 @@ public class OrderForm {
     private int count;
     private int orderPrice;
 
-    private String postcode;
     @NotEmpty(message = "주소를 입력해야 합니다.")
+    private String postcode;
+    @NotEmpty
     private String mainAddress;
     private String extraAddress;
 }

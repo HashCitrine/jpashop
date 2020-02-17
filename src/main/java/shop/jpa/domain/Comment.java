@@ -19,7 +19,6 @@ public class Comment {
     private Long parent;
 
     private LocalDateTime sequence;
-    private Long num;
 
     @ManyToOne
     @JoinColumn(name = "member_id")

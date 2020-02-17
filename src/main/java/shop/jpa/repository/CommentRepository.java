@@ -28,8 +28,8 @@ public class CommentRepository {
     }
 
     public List<Comment> findAll(Review review) {
-        return em.createQuery("select c from Comment c where c.review = ?1 ORDER BY c.sequence ASC, c.num ASC", Comment.class)
-                .setParameter(1, review)
+        return em.createQuery("select c from Comment c where c.review =:review ORDER BY c.sequence ASC, c.date ASC", Comment.class)
+                .setParameter("review", review)
                 .getResultList();
     }
 

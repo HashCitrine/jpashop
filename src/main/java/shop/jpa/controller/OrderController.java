@@ -20,6 +20,7 @@ import shop.jpa.service.MemberService;
 import shop.jpa.service.OrderService;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -91,7 +92,7 @@ public class OrderController {
 
     // 상품 구매
     @PostMapping("/buy")
-    public String orderItem(@ModelAttribute("form") OrderForm form, Model model, HttpSession session, BindingResult result) {
+    public String orderItem(@Valid  @ModelAttribute("form") OrderForm form, Model model, HttpSession session, BindingResult result) {
         if(memberService.getLoginMember(session) == null) {
             return "others/needLogin";
         }
