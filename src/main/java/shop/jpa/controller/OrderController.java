@@ -130,13 +130,10 @@ public class OrderController {
         }
 
         Order order = orderService.findById(orderId);
-        Member member = memberService.getLoginMember(session);
+        Long orderMember = order.getMember().getId();
+        Long loginMember = memberService.getLoginMemberId(session);
 
-        if (order.getMember().getId() != member.getId() && member.getRole() != Role.ADMIN) {
-            boolean a = order.getMember().getId() != member.getId();
-            boolean b = member.getRole() != Role.ADMIN;
-
-            System.out.println( a+ ", " + b);
+        if (!orderMember.equals(loginMember) && memberService.getRole(session) != Role.ADMIN) {
             return "redirect:/";
         }
 

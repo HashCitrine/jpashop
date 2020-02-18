@@ -309,8 +309,18 @@ public class ItemController {
         System.out.println("parentId : " + parentId);
 
         if (parentId != 0) {
-            comment.setParent(form.getParentId());
-            comment.setSequence(commentService.findOne(form.getParentId()).getDate());
+            Comment parent = commentService.findOne(parentId);
+            Long num;
+            while(true) {
+                num = parent.getParent();
+                if(num == 0L) {
+                    break;
+                }
+                parent = commentService.findOne(parent.getParent());
+            }
+
+            comment.setParent(parentId);
+            comment.setSequence(parent.getDate());
         }
 
         commentService.saveComment(comment);

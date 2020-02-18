@@ -129,7 +129,6 @@
                             <hr>
                             <!-- 답글 화면 -->
                             <div style="display: none" th:id="${comment.id}">
-
                                 <form th:object="${form}" method="post"
                                       th:action="@{/{itemId}/review/{reviewId}/{parentId}/(itemId=${form.itemId},reviewId=${review.id},parentId=${comment.id})}">
                                     <div class="row">
